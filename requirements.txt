@@ -1,4 +1,4 @@
-# GA Technologies MLOps Platform - Fixed Requirements
+# GP MLOps Platform - Fixed Requirements
 # All dependency conflicts resolved
 
 # Core Web Framework

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies Full MLOps Stack Startup Script
+# GP MLOps Full MLOps Stack Startup Script
 # Starts the complete MLOps platform with all components
 
 set -e
 
-echo "🚀 GA Technologies Full MLOps Platform"
+echo "🚀 GP MLOps Full MLOps Platform"
 echo "===================================="
 echo "Starting complete MLOps stack..."
 echo "Components: FastAPI + MLflow + Dify + KServe + Monitoring"
@@ -45,7 +45,7 @@ export ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-"your-anthropic-key-here"}
 export SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT:-"your-account"}
 export SNOWFLAKE_USER=${SNOWFLAKE_USER:-"your-user"}
 export SNOWFLAKE_PASSWORD=${SNOWFLAKE_PASSWORD:-"your-password"}
-export SNOWFLAKE_DATABASE=${SNOWFLAKE_DATABASE:-"GA_TECHNOLOGIES_DW"}
+export SNOWFLAKE_DATABASE=${SNOWFLAKE_DATABASE:-"GP_MLOPS_DW"}
 
 echo "🔧 Environment variables configured"
 
@@ -64,7 +64,7 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'ga-api'
+  - job_name: 'gp-api'
     static_configs:
       - targets: ['api:8000']
     metrics_path: /metrics
@@ -110,7 +110,7 @@ echo "   - Waiting for Dify services..."
 sleep 30
 
 # Wait for main API to be ready
-echo "   - Waiting for GA API..."
+echo "   - Waiting for GP API..."
 sleep 10
 
 # Health check function
@@ -139,7 +139,7 @@ check_service() {
 # Perform health checks
 echo "🏥 Performing health checks..."
 
-check_service "GA Technologies API" "http://localhost:2223/health"
+check_service "GP MLOps API" "http://localhost:2223/health"
 check_service "MLflow Server" "http://localhost:2226"
 check_service "Dify API" "http://localhost:2229/health"
 check_service "Dify Web Console" "http://localhost:2230"
@@ -151,7 +151,7 @@ echo "✅ MLOps Platform Started Successfully!"
 echo "===================================="
 echo
 echo "🌐 Access Points:"
-echo "   • GA Technologies API:       http://localhost:2223"
+echo "   • GP MLOps API:       http://localhost:2223"
 echo "   • API Documentation:       http://localhost:2223/docs"
 echo "   • Tokyo Dashboard:         http://localhost:2222 (if running)"
 echo
@@ -206,5 +206,5 @@ echo "🔍 To view logs:"
 echo "   docker-compose logs -f [service_name]"
 echo
 echo "===================================="
-echo "🎯 Ready for GA Technologies Demo!"
+echo "🎯 Ready for GP MLOps Demo!"
 echo "===================================="

@@ -1,4 +1,4 @@
-# 🚀 GA Technologies MLOps Platform - Quick Start Guide
+# 🚀 GP MLOps Platform - Quick Start Guide
 
 ## **Prerequisites**
 
@@ -26,35 +26,9 @@ netstat -an | grep -E "2222|2223|2224|2225|2226|2227|2228|2229|2230|2231|2233|22
 
 ---
 
-## **Option 1: Quick Start (Recommended)**
 
-### **Step 1: Clone/Navigate to Project**
-```bash
-cd /mnt/c/Users/ibm/Documents/GA
-```
 
-### **Step 2: Install Python Dependencies**
-```bash
-# Install dashboard requirements
-pip3 install -r dashboard/requirements.txt
-
-# Install main app requirements (optional, for local development)
-pip3 install -r requirements.txt
-```
-
-### **Step 3: Start Tokyo Dashboard (Simplest)**
-```bash
-cd dashboard
-./start_dashboard.sh
-```
-This starts:
-- Backend API on port 2233
-- Dashboard on port 2222
-- Access at: http://localhost:2222
-
----
-
-## **Option 2: Full MLOps Stack (Advanced)**
+## **Full MLOps Stack (Advanced)**
 
 ### **Step 1: Prepare Environment**
 ```bash
@@ -78,7 +52,7 @@ ANTHROPIC_API_KEY=your-anthropic-key-here
 SNOWFLAKE_ACCOUNT=your-account
 SNOWFLAKE_USER=your-user
 SNOWFLAKE_PASSWORD=your-password
-SNOWFLAKE_DATABASE=GA_TECHNOLOGIES_DW
+SNOWFLAKE_DATABASE=GP_MLOPS_DW
 AWS_ACCESS_KEY_ID=your-aws-key
 AWS_SECRET_ACCESS_KEY=your-aws-secret
 EOF

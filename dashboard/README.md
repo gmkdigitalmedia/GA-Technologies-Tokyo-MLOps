@@ -1,17 +1,17 @@
-# 🚀 GA Technologies MLOps Dashboard
+#  GP MLOps Dashboard
 
 ## **Impressive Executive Dashboard with Real ML Models**
 
 A sleek, modern dashboard that showcases working MLOps capabilities:
 
-### ✨ **Features**
+###  **Features**
 - **Real-time ML Predictions**: Live customer value inference
 - **Computer Vision**: Floorplan image analysis  
 - **Interactive Charts**: Real-time metrics and system health
 - **Professional Design**: Executive-ready interface
 - **Working Technology**: Actual ML models, not mockups
 
-### 🎯 **What It Actually Does**
+###  **What It Actually Does**
 - Trains real ML models with measurable accuracy
 - Processes customer data and predicts conversion probability
 - Analyzes uploaded floorplan images using computer vision
@@ -20,7 +20,7 @@ A sleek, modern dashboard that showcases working MLOps capabilities:
 
 ---
 
-## 🚀 **Quick Start**
+##  **Quick Start**
 
 ### **Single Command Launch:**
 ```bash
@@ -55,7 +55,7 @@ python3 frontend.py
 
 ---
 
-## 🎪 **Dashboard Features**
+##  **Dashboard Features**
 
 ### **Real-Time Metrics**
 - Model accuracy (actual %)
@@ -76,7 +76,7 @@ python3 frontend.py
 
 ---
 
-## 🎯 **Demo Scenarios**
+##  **Demo Scenarios**
 
 ### **For Executives**
 1. Show real-time system health (99.97% uptime)
@@ -94,7 +94,7 @@ python3 frontend.py
 
 ---
 
-## 🏗️ **Architecture**
+##  **Architecture**
 
 ```
 Frontend (Port 2222)     Backend (Port 8888)
@@ -108,7 +108,7 @@ Frontend (Port 2222)     Backend (Port 8888)
 
 ---
 
-## 📊 **Real Metrics Shown**
+##  **Real Metrics Shown**
 
 - **Model Accuracy**: 84.7% (actual trained model)
 - **Response Time**: <200ms (real measurements)  
@@ -118,7 +118,7 @@ Frontend (Port 2222)     Backend (Port 8888)
 
 ---
 
-## 🎨 **What Makes It Cool**
+##  **What Makes It Cool**
 
 - **Modern Design**: Gradient backgrounds, glassmorphism effects
 - **Real-Time Updates**: Live metrics every 10 seconds

@@ -88,7 +88,7 @@ async def serve_ad(
     db: Session = Depends(get_db)
 ):
     """
-    Serve targeted ad to customer based on GA Technologies' criteria:
+    Serve targeted ad to customer based on GP MLOps' criteria:
     - Age: 40-50 years old
     - Income: >10M yen annually  
     - Target: Salaryman professionals
@@ -225,7 +225,7 @@ async def create_campaign(
     campaign: CampaignCreate,
     db: Session = Depends(get_db)
 ):
-    """Create new advertising campaign for GA Technologies' target audience"""
+    """Create new advertising campaign for GP MLOps' target audience"""
     try:
         # Validate targeting criteria matches GA's requirements
         if campaign.min_age < 35 or campaign.max_age > 55:
@@ -237,7 +237,7 @@ async def create_campaign(
         if campaign.min_income < 8000000:  # 8M yen minimum
             raise HTTPException(
                 status_code=400,
-                detail="Income targeting must be at least 8M yen for GA Technologies' market"
+                detail="Income targeting must be at least 8M yen for GP MLOps' market"
             )
         
         # Create campaign
@@ -478,7 +478,7 @@ async def get_audience_segments(db: Session = Depends(get_db)):
                 }
             })
         else:
-            # Default segment info for GA Technologies' primary target
+            # Default segment info for GP MLOps' primary target
             if segment == AudienceSegment.HIGH_INCOME_SALARYMAN:
                 segments.append({
                     "segment": segment.value,

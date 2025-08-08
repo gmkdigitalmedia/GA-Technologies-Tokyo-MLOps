@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GA Technologies Tokyo Real Estate Ad Serving Backend
+GP MLOps Tokyo Real Estate Ad Serving Backend
 A/B testing and ML-powered ad optimization for Tokyo property sales
 Port: 2233
 """
@@ -28,7 +28,7 @@ import random
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="GA Technologies Tokyo Real Estate Ad Platform", version="1.0.0")
+app = FastAPI(title="GP MLOps Tokyo Real Estate Ad Platform", version="1.0.0")
 
 # Enable CORS for frontend
 app.add_middleware(
@@ -369,7 +369,7 @@ async def simulate_ad_interactions():
 @app.get("/")
 async def root():
     return {
-        "message": "GA Technologies Tokyo Real Estate Ad Platform",
+        "message": "GP MLOps Tokyo Real Estate Ad Platform",
         "status": "running",
         "models_loaded": len(models),
         "focus": "Tokyo Real Estate A/B Testing & Ad Optimization"
@@ -672,7 +672,7 @@ async def health_check():
     }
 
 if __name__ == "__main__":
-    print("🏙️  GA Technologies Tokyo Real Estate Ad Platform")
+    print("🏙️  GP MLOps Tokyo Real Estate Ad Platform")
     print("🔗 Backend running on: http://localhost:2233")
     print("🎯 Training Tokyo real estate ad targeting models...")
     

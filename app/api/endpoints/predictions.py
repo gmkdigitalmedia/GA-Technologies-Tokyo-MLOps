@@ -93,7 +93,7 @@ async def get_batch_job_status(job_id: str):
             "progress": "45%",
             "completed_count": 450,
             "total_count": 1000,
-            "results_s3_path": f"s3://ga-technology-mlops/batch_results/{job_id}.parquet"
+            "results_s3_path": f"s3://gp-mlops-mlops/batch_results/{job_id}.parquet"
         }
         
     except Exception as e:
@@ -252,7 +252,7 @@ async def deploy_model_to_sagemaker(
             endpoint_name = f"ga-{model_type}-model-{int(time.time())}"
         
         # Get model S3 path
-        model_s3_path = f"s3://ga-technology-mlops/models/{model_type}_model.pkl"
+        model_s3_path = f"s3://gp-mlops-mlops/models/{model_type}_model.pkl"
         
         # Deploy model
         deployed_endpoint = sagemaker_service.deploy_model(

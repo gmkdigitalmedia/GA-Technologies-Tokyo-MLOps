@@ -1,4 +1,4 @@
-# GA Technologies MLOps Platform - Minimal Requirements
+# GP MLOps MLOps Platform - Minimal Requirements
 # This version resolves all dependency conflicts
 
 # Core Web Framework

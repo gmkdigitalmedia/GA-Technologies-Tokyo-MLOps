@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     AWS_SECRET_ACCESS_KEY: Optional[str] = None
     
     # S3 Configuration
-    S3_BUCKET_NAME: str = "ga-technology-mlops"
+    S3_BUCKET_NAME: str = "gp-mlops-mlops"
     S3_DATA_PREFIX: str = "data/"
     S3_MODEL_PREFIX: str = "models/"
     
@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     
     # MLflow (on AWS)
     MLFLOW_TRACKING_URI: str = "http://localhost:2226"
-    MLFLOW_S3_ARTIFACT_ROOT: str = "s3://ga-technology-mlops/mlflow-artifacts/"
+    MLFLOW_S3_ARTIFACT_ROOT: str = "s3://gp-mlops-mlops/mlflow-artifacts/"
     
     # API Keys
     JWT_SECRET_KEY: str = "your-secret-key-here"

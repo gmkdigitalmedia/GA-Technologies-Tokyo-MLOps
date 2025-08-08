@@ -1,4 +1,4 @@
-# 🏢 GA Technologies - MLOps Platform Demo Guide
+# 🏢 GP MLOps - MLOps Platform Demo Guide
 
 ## 📁 Demo Structure Overview
 
@@ -25,14 +25,8 @@ This repository contains **three different demo types** for different audiences:
 
 ---
 
-## 🎯 Quick Start by Audience
+##  Quick Start by Audience
 
-### **For Executives → Enterprise Demo**
-```bash
-cd /mnt/c/Users/ibm/Documents/GA/enterprise_demo
-./run_enterprise_demo.sh
-```
-**Shows**: Revenue impact, market positioning, strategic value
 
 ### **For General Audience → Main Dashboard**
 ```bash
@@ -83,7 +77,7 @@ cd /mnt/c/Users/ibm/Documents/GA
 
 ---
 
-## 🎪 Demo Scenarios by Use Case
+##  Demo Scenarios by Use Case
 
 ### **Scenario 1: "Show me what it does"**
 **→ Use Main Dashboard**
@@ -91,11 +85,7 @@ cd /mnt/c/Users/ibm/Documents/GA
 2. Open: http://localhost:2222
 3. Demo: Live ML predictions, real-time metrics, interactive features
 
-### **Scenario 2: "What's the business value?"**
-**→ Use Enterprise Demo**
-1. Start: `cd enterprise_demo && ./run_enterprise_demo.sh`
-2. Focus: Revenue impact, cost savings, competitive advantages
-3. Show: Financial dashboards, market analysis, ROI projections
+
 
 ### **Scenario 3: "How does it work technically?"**
 **→ Use Full MLOps Stack**
@@ -155,7 +145,6 @@ docker-compose up -d postgres redis
 
 ### **Demo-Specific READMEs**
 - `dashboard/README.md` - Main dashboard features
-- `enterprise_demo/README.md` - Executive presentation guide
 - `technical_demo/README.md` - Technical implementation details
 
 ---
@@ -168,11 +157,6 @@ Start with: **Main Dashboard** (`/dashboard/`)
 - Shows immediate value with working ML
 - Interactive and engaging
 
-### **Executive Stakeholders** 
-Use: **Enterprise Demo** (`/enterprise_demo/`)
-- Business-focused metrics and ROI
-- Strategic value proposition
-- Professional presentation format
 
 ### **Technical Teams**
 Deploy: **Full MLOps Stack** (`./start_full_mlops.sh`)
@@ -182,4 +166,4 @@ Deploy: **Full MLOps Stack** (`./start_full_mlops.sh`)
 
 ---
 
-**🚀 Ready to start? Choose your demo type above and follow the quick start commands!**
+**Ready to start? Choose your demo type above and follow the quick start commands!**

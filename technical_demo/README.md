@@ -1,4 +1,4 @@
-# GA Technologies MLOps Platform - Technical Demo
+# GP MLOps Platform - Technical Demo
 
 ## What This Actually Does
 

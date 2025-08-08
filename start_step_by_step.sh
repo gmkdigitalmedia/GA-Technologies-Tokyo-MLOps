@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies - Step by Step Service Startup
+# GP MLOps - Step by Step Service Startup
 # Starts services one by one to identify any build issues
 
 set -e
 
-echo "🚀 GA Technologies Step-by-Step Startup"
+echo "🚀 GP MLOps Step-by-Step Startup"
 echo "========================================"
 echo "Starting services individually..."
 echo

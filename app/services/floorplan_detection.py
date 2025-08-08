@@ -379,7 +379,7 @@ class FloorplanDetectionService:
             for property_id in property_ids:
                 # Get property floorplan path from database
                 # This would typically query the property table
-                mock_image_path = f"s3://ga-technology-mlops/floorplans/{property_id}.jpg"
+                mock_image_path = f"s3://gp-mlops-mlops/floorplans/{property_id}.jpg"
                 
                 try:
                     # Perform analysis

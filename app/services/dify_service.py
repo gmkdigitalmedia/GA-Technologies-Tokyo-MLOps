@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class DifyWorkflowService:
     def __init__(self):
         self.dify_api_url = "http://localhost:2229"
-        self.api_key = "app-" + "dify-ga-technology"  # This would be generated in Dify console
+        self.api_key = "app-" + "dify-gp-mlops"  # This would be generated in Dify console
         self.timeout = 30
         
     async def create_customer_interaction_workflow(self, customer_data: Dict[str, Any]) -> Dict[str, Any]:

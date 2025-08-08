@@ -23,12 +23,12 @@ class AirbyteService:
         
     async def initialize_workspace(self) -> Dict[str, Any]:
         """
-        Initialize Airbyte workspace for GA Technologies
+        Initialize Airbyte workspace for GP MLOps
         """
         try:
             workspace_data = {
-                "name": "GA Technologies Real Estate",
-                "email": "data@ga-technology.com",
+                "name": "GP MLOps Real Estate",
+                "email": "data@gp-mlops.com",
                 "anonymousDataCollection": False,
                 "news": False,
                 "securityUpdates": True
@@ -61,7 +61,7 @@ class AirbyteService:
             return {
                 "success": True,
                 "workspace_id": self.workspace_id,
-                "workspace_name": "GA Technologies Real Estate",
+                "workspace_name": "GP MLOps Real Estate",
                 "mock": True
             }
     
@@ -95,7 +95,7 @@ class AirbyteService:
         return {
             "success": True,
             "workspace_id": self.workspace_id,
-            "workspace_name": "GA Technologies Real Estate",
+            "workspace_name": "GP MLOps Real Estate",
             "mock": True
         }
     
@@ -118,14 +118,14 @@ class AirbyteService:
                     "host": settings.SNOWFLAKE_ACCOUNT + ".snowflakecomputing.com",
                     "role": "TRANSFORMER",
                     "warehouse": settings.SNOWFLAKE_WAREHOUSE or "COMPUTE_WH",
-                    "database": settings.SNOWFLAKE_DATABASE or "GA_TECHNOLOGY_DW",
+                    "database": settings.SNOWFLAKE_DATABASE or "GP_MLOPS_DW",
                     "schema": settings.SNOWFLAKE_SCHEMA or "PUBLIC",
                     "username": settings.SNOWFLAKE_USER,
                     "password": settings.SNOWFLAKE_PASSWORD,
                     "jdbc_url_params": ""
                 },
                 "workspaceId": self.workspace_id,
-                "name": "GA Technologies Snowflake DW"
+                "name": "GP MLOps Snowflake DW"
             }
             
             async with aiohttp.ClientSession() as session:
@@ -141,7 +141,7 @@ class AirbyteService:
                         return {
                             "success": True,
                             "source_id": result.get("sourceId"),
-                            "source_name": "GA Technologies Snowflake DW",
+                            "source_name": "GP MLOps Snowflake DW",
                             "connection_status": "created"
                         }
                     else:
@@ -155,7 +155,7 @@ class AirbyteService:
             return {
                 "success": True,
                 "source_id": "mock-snowflake-source-id",
-                "source_name": "GA Technologies Snowflake DW",
+                "source_name": "GP MLOps Snowflake DW",
                 "connection_status": "mock",
                 "mock": True
             }
@@ -188,7 +188,7 @@ class AirbyteService:
                     }
                 },
                 "workspaceId": self.workspace_id,
-                "name": "GA Technologies PostgreSQL"
+                "name": "GP MLOps PostgreSQL"
             }
             
             async with aiohttp.ClientSession() as session:
@@ -204,7 +204,7 @@ class AirbyteService:
                         return {
                             "success": True,
                             "destination_id": result.get("destinationId"),
-                            "destination_name": "GA Technologies PostgreSQL",
+                            "destination_name": "GP MLOps PostgreSQL",
                             "connection_status": "created"
                         }
                     else:
@@ -218,7 +218,7 @@ class AirbyteService:
             return {
                 "success": True,
                 "destination_id": "mock-postgres-destination-id",
-                "destination_name": "GA Technologies PostgreSQL",
+                "destination_name": "GP MLOps PostgreSQL",
                 "connection_status": "mock",
                 "mock": True
             }

@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.get("/")
 async def health_check():
-    return {"status": "healthy", "service": "GA Technologies MLOps Platform"}
+    return {"status": "healthy", "service": "GP MLOps Platform"}
 
 @router.get("/detailed")
 async def detailed_health_check(db: Session = Depends(get_db)):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GA Technologies Dashboard Frontend Server
+GP MLOps Dashboard Frontend Server
 Serves the cool dashboard on port 2222
 """
 
@@ -32,7 +32,7 @@ def start_frontend_server():
     server_address = ('', 2222)
     httpd = HTTPServer(server_address, CORSHTTPRequestHandler)
     
-    print("🎨 GA Technologies Dashboard Frontend")
+    print("🎨 GP MLOps Dashboard Frontend")
     print("=" * 50)
     print(f"🔗 Dashboard URL: http://localhost:2222")
     print(f"📊 Backend API: http://localhost:2233")

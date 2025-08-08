@@ -1,5 +1,7 @@
- for GA technoogy tey are a real estate company useing data and applied ML.  real estate buying and selling(Renosy), and rental management and brokerage(Itandi).They usually sell to salaryman in the 40's to 50's, then   │
+ for GP MLOps they are a real estate company useing data and applied ML.  real estate buying and selling(Renosy), and rental management and brokerage(Itandi).They usually sell to salaryman in the 40's to 50's, then   │
 │   support the management of selling.  Itandi is b2b .  they are growing very fast about 30% a year for the past 5 years .  For Renosy, the real estate is the focus on my job.  The data is very siloed, so we are dealign   │
 │   with Renosy Data Division.  Data Management, Snowflake Data warehouse, Data analysis doing modeling using DBT and AI team using LLM .  they want a stable mlops platform.  generative ai platform.  t hey get a            │
 │   conversion API Capi  .  they use mlops to inference and evaluate the value the customer has based on their value and conversion rate , then they can serve them an add.  they are using MLOPs and llmops using DiFY.       │
-│   also characterizing what customers would want what floorplans, so they are modeling to detect the layout of a floorplan from a picture, then they want to basically to serve the right people the ad             
+│   also characterizing what customers would want what floorplans, so they are modeling to detect the layout of a floorplan from a picture, then they want to basically to serve the right people the ad             .  they alos are using DIFY. 
+
+can you build me a scaleable architecturs for Renosys for serving ads that using LLMS to parse infomration and full mlops including DIFY and KSERVER all on AWS. I will need this as code.  ask any clarifying questions.  basically we need a business platform so they can share needs and probably an ad serving infrastructure, i am not sure how the ads get delivered

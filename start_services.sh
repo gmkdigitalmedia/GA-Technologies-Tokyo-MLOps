@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies - Quick Services Startup (No Docker Build Required)
+# GP MLOps - Quick Services Startup (No Docker Build Required)
 # This script starts only the pre-built services that don't require building
 
 set -e
 
-echo "🚀 GA Technologies Services Startup"
+echo "🚀 GP MLOps Services Startup"
 echo "===================================="
 echo "Starting database and cache services only..."
 echo

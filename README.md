@@ -1,8 +1,8 @@
-# GA Technologies MLOps Platform
+# GP MLOps MLOps Platform
 
-A comprehensive MLOps/LLMOps platform for GA Technologies' real estate business, featuring customer value inference, floorplan layout detection, and conversion optimization.
+A comprehensive MLOps/LLMOps platform for GP MLOps' real estate business, featuring customer value inference, floorplan layout detection, and conversion optimization.
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 This platform integrates:
 - **AWS Infrastructure**: ECS, SageMaker, S3, RDS, ElastiCache
@@ -11,7 +11,7 @@ This platform integrates:
 - **Real Estate ML Models**: Customer value inference and floorplan analysis
 - **API Services**: RESTful APIs for all platform functionality
 
-## 🚀 Features
+## Features
 
 ### Core ML Capabilities
 - **Customer Value Inference**: Predict conversion probability and lifetime value
@@ -26,7 +26,7 @@ This platform integrates:
 - **Monitoring & Observability**: Comprehensive metrics and logging
 - **Auto-scaling**: Cloud-native scalability
 
-## 📋 Prerequisites
+## Prerequisites
 
 - AWS CLI configured with appropriate permissions
 - Docker and Docker Compose
@@ -34,7 +34,7 @@ This platform integrates:
 - Snowflake account and credentials
 - Git
 
-## 🛠️ Quick Start
+## Quick Start
 
 ### 1. Clone and Setup
 ```bash
@@ -70,7 +70,7 @@ export SNOWFLAKE_PASSWORD="your_password"
 ./deploy.sh dev
 ```
 
-## 📊 API Endpoints
+## API Endpoints
 
 ### Health & Status
 - `GET /health` - Basic health check
@@ -93,7 +93,7 @@ export SNOWFLAKE_PASSWORD="your_password"
 - `GET /api/v1/predictions/batch/{job_id}` - Check batch status
 - `POST /api/v1/predictions/train-model` - Train/retrain models
 
-## 🏢 Data Architecture
+## Data Architecture
 
 ### Snowflake Integration
 - **Customer Data**: Demographics, preferences, interaction history  
@@ -107,7 +107,7 @@ export SNOWFLAKE_PASSWORD="your_password"
 - **ElastiCache Redis**: Caching and session management
 - **ECS Fargate**: Containerized application hosting
 
-## 🤖 ML Models
+## ML Models
 
 ### Customer Value Inference
 - **Conversion Model**: Gradient Boosting Classifier
@@ -120,7 +120,7 @@ export SNOWFLAKE_PASSWORD="your_password"
 - **Capabilities**: Room type identification, accessibility scoring, family-friendliness
 - **Output**: Structured layout data, flow analysis, recommendations
 
-## 📈 Monitoring & Operations
+## Monitoring & Operations
 
 ### Metrics & Observability
 - **Application Metrics**: Request rates, response times, error rates
@@ -134,19 +134,19 @@ export SNOWFLAKE_PASSWORD="your_password"
 - Data quality problems
 - SLA violations
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 Key configurations in `.env`:
 ```bash
 # AWS
 AWS_REGION=us-east-1
-S3_BUCKET_NAME=ga-technology-mlops-dev
+S3_BUCKET_NAME=gp-mlops-mlops-dev
 SAGEMAKER_EXECUTION_ROLE=arn:aws:iam::account:role/SageMakerRole
 
 # Snowflake
 SNOWFLAKE_ACCOUNT=account.region
-SNOWFLAKE_DATABASE=GA_TECHNOLOGY
+SNOWFLAKE_DATABASE=GP_MLOPS
 SNOWFLAKE_WAREHOUSE=COMPUTE_WH
 
 # Application
@@ -154,7 +154,7 @@ DATABASE_URL=postgresql://user:pass@localhost/ga_platform
 REDIS_URL=redis://localhost:6379
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run unit tests
@@ -170,7 +170,7 @@ pytest tests/api/
 locust -f tests/load_test.py --host=http://localhost:8000
 ```
 
-## 📚 Development
+## Development
 
 ### Adding New Features
 1. Create feature branch
@@ -215,7 +215,7 @@ locust -f tests/load_test.py --host=http://localhost:8000
 
 ## 📄 License
 
-This project is proprietary software owned by GA Technologies.
+This project is proprietary software owned by GP MLOps.
 
 ## 🆘 Support
 
@@ -250,4 +250,18 @@ For support and questions:
                        └─────────────────┘    └─────────────────┘
 ```
 
-Built with ❤️ for GA Technologies' real estate platform.
+
+
+
+  Architecture Overview:
+  ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+  │   Tokyo Dashboard│    │   FastAPI Backend │    │   KServe Cluster│
+  │   (Port 2222)   │◄──►│   (Port 8888)    │◄──►│   ML Models     │
+  └─────────────────┘    └──────────────────┘    └─────────────────┘
+           │                       │                       │
+           │                       ▼                       ▼
+           │              ┌──────────────────┐    ┌─────────────────┐
+           │              │   Snowflake DW   │    │   AWS Services  │
+           └──────────────┤   Data Storage   │    │   S3, ECS, etc  │
+                          └──────────────────┘    └─────────────────┘
+Built with ❤️ for GP MLOps' real estate platform.

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies MLOps Dashboard Launcher
+# GP MLOps MLOps Dashboard Launcher
 # Starts backend (8888) and frontend (2222)
 
 set -e
 
-echo "🚀 GA Technologies MLOps Dashboard"
+echo "🚀 GP MLOps MLOps Dashboard"
 echo "================================="
 echo "Backend: http://localhost:2233"
 echo "Frontend: http://localhost:2222"

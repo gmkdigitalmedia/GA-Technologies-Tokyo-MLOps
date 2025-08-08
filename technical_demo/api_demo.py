@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Simple standalone API demo that actually works
-Shows real ML models in action without fake business metrics
+Simulates real ML models in action 
 """
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
@@ -20,7 +20,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="GA Technologies MLOps Demo", version="1.0.0")
+app = FastAPI(title="GP MLOps Demo", version="1.0.0")
 
 # Global models
 models = {}
@@ -94,7 +94,7 @@ async def startup_event():
 @app.get("/")
 async def root():
     return {
-        "message": "GA Technologies MLOps Demo API", 
+        "message": "GP MLOps Demo API", 
         "status": "running",
         "models_loaded": len(models),
         "endpoints": [
@@ -234,9 +234,9 @@ async def sample_prediction():
     }
 
 if __name__ == "__main__":
-    print("🚀 Starting GA Technologies MLOps Demo API...")
+    print("🚀 Starting GP MLOps Demo API...")
     print("📊 Training ML models...")
-    print("🔗 API will be available at: http://localhost:8000")
-    print("📖 Documentation at: http://localhost:8000/docs")
+    print("🔗 API will be available at: http://localhost:2233")
+    print("📖 Documentation at: http://localhost:2233/docs")
     
     uvicorn.run(app, host="0.0.0.0", port=8000)

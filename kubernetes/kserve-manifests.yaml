@@ -16,11 +16,11 @@ data:
     model_configs:
       customer_value:
         framework: sklearn
-        storage_uri: s3://ga-technology-mlops/models/customer_value/
+        storage_uri: s3://gp-mlops-mlops/models/customer_value/
         runtime: kserve-sklearn
       floorplan_detection:
         framework: pytorch  
-        storage_uri: s3://ga-technology-mlops/models/floorplan/
+        storage_uri: s3://gp-mlops-mlops/models/floorplan/
         runtime: kserve-pytorch
 
 ---
@@ -35,7 +35,7 @@ spec:
   predictor:
     serviceAccountName: kserve-service-account
     sklearn:
-      storageUri: s3://ga-technology-mlops/models/customer_value/
+      storageUri: s3://gp-mlops-mlops/models/customer_value/
       resources:
         limits:
           cpu: 1000m
@@ -45,7 +45,7 @@ spec:
           memory: 1Gi
       env:
         - name: STORAGE_URI
-          value: s3://ga-technology-mlops/models/customer_value/
+          value: s3://gp-mlops-mlops/models/customer_value/
   transformer:
     containers:
     - name: transformer
@@ -73,7 +73,7 @@ spec:
   predictor:
     serviceAccountName: kserve-service-account
     pytorch:
-      storageUri: s3://ga-technology-mlops/models/floorplan/
+      storageUri: s3://gp-mlops-mlops/models/floorplan/
       resources:
         limits:
           cpu: 2000m
@@ -84,7 +84,7 @@ spec:
           memory: 2Gi
       env:
         - name: STORAGE_URI
-          value: s3://ga-technology-mlops/models/floorplan/
+          value: s3://gp-mlops-mlops/models/floorplan/
         - name: MODEL_NAME
           value: floorplan_detection_model
   transformer:

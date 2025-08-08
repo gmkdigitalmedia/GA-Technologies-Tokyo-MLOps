@@ -15,7 +15,7 @@ API_BASE_URL = "http://localhost:8000"
 def test_api_endpoints():
     """Test all API endpoints with real data"""
     
-    print("🧪 Testing GA Technologies MLOps Demo API")
+    print("🧪 Testing GP MLOps MLOps Demo API")
     print("=" * 60)
     
     # Test 1: Health check

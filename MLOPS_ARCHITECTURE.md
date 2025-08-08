@@ -1,4 +1,4 @@
-# 🚀 GA Technologies MLOps Architecture
+# 🚀 GP MLOps Architecture
 
 ## **Complete MLOps Platform for Tokyo Real Estate**
 

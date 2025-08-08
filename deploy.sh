@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# GA Technologies MLOps Platform Deployment Script
+# GP MLOps Platform Deployment Script
 
 set -e
 
@@ -13,9 +13,9 @@ NC='\033[0m' # No Color
 # Configuration
 ENVIRONMENT=${1:-dev}
 AWS_REGION=${AWS_REGION:-us-east-1}
-STACK_NAME="ga-mlops-${ENVIRONMENT}"
+STACK_NAME="gp-mlops-${ENVIRONMENT}"
 
-echo -e "${GREEN}🚀 Deploying GA Technologies MLOps Platform - Environment: ${ENVIRONMENT}${NC}"
+echo -e "${GREEN}🚀 Deploying GP MLOps Platform - Environment: ${ENVIRONMENT}${NC}"
 
 # Function to print status
 print_status() {
@@ -105,19 +105,19 @@ build_and_push_image() {
     
     # Get ECR repository URI (if exists)
     ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-    ECR_REPO="${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/ga-mlops-${ENVIRONMENT}"
+    ECR_REPO="${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/gp-mlops-${ENVIRONMENT}"
     
     # Create ECR repository if it doesn't exist
-    aws ecr describe-repositories --repository-names "ga-mlops-${ENVIRONMENT}" --region $AWS_REGION 2>/dev/null || \
-    aws ecr create-repository --repository-name "ga-mlops-${ENVIRONMENT}" --region $AWS_REGION
+    aws ecr describe-repositories --repository-names "gp-mlops-${ENVIRONMENT}" --region $AWS_REGION 2>/dev/null || \
+    aws ecr create-repository --repository-name "gp-mlops-${ENVIRONMENT}" --region $AWS_REGION
     
     # Login to ECR
     aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
     
     # Build image
-    docker build -t ga-mlops:$ENVIRONMENT .
-    docker tag ga-mlops:$ENVIRONMENT $ECR_REPO:latest
-    docker tag ga-mlops:$ENVIRONMENT $ECR_REPO:$ENVIRONMENT
+    docker build -t gp-mlops:$ENVIRONMENT .
+    docker tag gp-mlops:$ENVIRONMENT $ECR_REPO:latest
+    docker tag gp-mlops:$ENVIRONMENT $ECR_REPO:$ENVIRONMENT
     
     # Push image
     docker push $ECR_REPO:latest
@@ -150,7 +150,7 @@ deploy_application() {
     # Create ECS task definition
     cat > task-definition.json << EOF
 {
-    "family": "ga-mlops-${ENVIRONMENT}",
+    "family": "gp-mlops-${ENVIRONMENT}",
     "networkMode": "awsvpc",
     "requiresCompatibilities": ["FARGATE"],
     "cpu": "1024",
@@ -159,7 +159,7 @@ deploy_application() {
     "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/ecsTaskRole",
     "containerDefinitions": [
         {
-            "name": "ga-mlops-api",
+            "name": "gp-mlops-api",
             "image": "${ECR_REPO}:${ENVIRONMENT}",
             "portMappings": [
                 {
@@ -176,7 +176,7 @@ deploy_application() {
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "/ecs/ga-mlops-${ENVIRONMENT}",
+                    "awslogs-group": "/ecs/gp-mlops-${ENVIRONMENT}",
                     "awslogs-region": "${AWS_REGION}",
                     "awslogs-stream-prefix": "ecs"
                 }
@@ -200,7 +200,7 @@ setup_monitoring() {
     
     # Create CloudWatch log group
     aws logs create-log-group \
-        --log-group-name "/ecs/ga-mlops-${ENVIRONMENT}" \
+        --log-group-name "/ecs/gp-mlops-${ENVIRONMENT}" \
         --region $AWS_REGION 2>/dev/null || true
     
     print_status "Monitoring setup completed"
@@ -223,7 +223,7 @@ main() {
     # Print useful information
     print_status "Useful commands:"
     echo "  - Check stack status: aws cloudformation describe-stacks --stack-name $STACK_NAME --region $AWS_REGION"
-    echo "  - View logs: aws logs tail /ecs/ga-mlops-${ENVIRONMENT} --follow --region $AWS_REGION"
+    echo "  - View logs: aws logs tail /ecs/gp-mlops-${ENVIRONMENT} --follow --region $AWS_REGION"
     echo "  - Update stack: ./deploy.sh $ENVIRONMENT"
 }
 

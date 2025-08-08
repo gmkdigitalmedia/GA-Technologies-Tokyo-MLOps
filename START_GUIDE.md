@@ -1,4 +1,4 @@
-# 🚀 GA Technologies MLOps Platform - Startup Guide
+# 🚀 GP MLOps MLOps Platform - Startup Guide
 
 ## ⚡ **Quick Start Options**
 

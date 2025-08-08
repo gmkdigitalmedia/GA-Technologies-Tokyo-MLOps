@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies - Real Technical Demo
+# GP MLOps - Real Technical Demo
 # No fake numbers, just working ML models
 
 set -e
 
-echo "🏢 GA Technologies MLOps Platform - Technical Demo"
+echo "🏢 GP MLOps MLOps Platform - Technical Demo"
 echo "================================================================"
 echo "Real ML models | Real predictions | Real A/B testing"
 echo "No fake business metrics - just working technology"

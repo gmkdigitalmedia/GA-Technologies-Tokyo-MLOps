@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GA Technologies MLOps Platform - Real Technical Demo
+GP MLOps MLOps Platform - Real Technical Demo
 
 This demonstrates actual working ML models and infrastructure
 without fake business metrics or made-up numbers.
@@ -382,7 +382,7 @@ def run_real_demo():
     """Run the actual working demo"""
     
     print("=" * 80)
-    print("🏢 GA Technologies MLOps Platform - Technical Demo")
+    print("🏢 GP MLOps MLOps Platform - Technical Demo")
     print("=" * 80)
     print("Real ML models, real predictions, real A/B testing")
     print("No fake numbers, just working technology")

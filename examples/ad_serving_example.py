@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GA Technologies Ad Serving Example
+GP MLOps Ad Serving Example
 
 This example demonstrates how to use the ad serving platform for
 targeting high-income salaryman (40-50 years old, >10M yen income).
@@ -27,7 +27,7 @@ API_ENDPOINTS = {
 }
 
 def create_sample_campaign():
-    """Create a sample campaign targeting GA Technologies' demographic"""
+    """Create a sample campaign targeting GP MLOps' demographic"""
     
     print("🎯 Creating ad campaign for high-income salaryman...")
     
@@ -121,7 +121,7 @@ def simulate_customer_requests(num_requests=10):
     
     print(f"👥 Simulating {num_requests} customer ad requests...")
     
-    # Sample customers matching GA Technologies' target demographic
+    # Sample customers matching GP MLOps' target demographic
     sample_customers = [
         {"id": 1001, "age": 45, "income": 12000000, "profession": "engineer", "location": "tokyo"},
         {"id": 1002, "age": 42, "income": 15000000, "profession": "manager", "location": "osaka"},
@@ -269,7 +269,7 @@ def analyze_campaign_performance(campaign_id):
 def main():
     """Run the complete ad serving example"""
     
-    print("🏢 GA Technologies Ad Serving Platform Demo")
+    print("🏢 GP MLOps Ad Serving Platform Demo")
     print("=" * 50)
     print("Target: High-income salaryman (40-50 years, >10M yen income)")
     print()
@@ -301,7 +301,7 @@ def main():
     
     print("\n🎉 Demo completed successfully!")
     print(f"Campaign ID {campaign_id} is now running with A/B testing enabled.")
-    print("Check the GA Technologies dashboard for real-time performance metrics.")
+    print("Check the GP MLOps dashboard for real-time performance metrics.")
 
 if __name__ == "__main__":
     main()

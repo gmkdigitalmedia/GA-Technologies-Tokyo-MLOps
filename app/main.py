@@ -12,7 +12,7 @@ from app.core.monitoring import setup_prometheus_metrics
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="GA Technologies MLOps Platform",
+    title="GP MLOps Platform",
     description="Real Estate MLOps Platform for Customer Value Inference and Floorplan Analysis",
     version="1.0.0"
 )
@@ -49,7 +49,7 @@ app.include_router(mlops.router, prefix="/api/v1", tags=["mlops"])
 @app.get("/")
 async def root():
     return {
-        "message": "GA Technologies MLOps Platform", 
+        "message": "GP MLOps Platform", 
         "version": "1.0.0",
         "services": ["customer_inference", "floorplan_detection", "conversion_api", "mlops_pipeline", "dify_workflows"]
     }

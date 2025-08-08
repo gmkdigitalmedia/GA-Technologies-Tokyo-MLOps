@@ -69,7 +69,7 @@ async def track_conversion_event(
     """
     Track conversion event and send to advertising platforms
     
-    This endpoint receives conversion events from GA Technologies' website/app
+    This endpoint receives conversion events from GP MLOps' website/app
     and handles attribution to ad campaigns plus sending data to advertising
     platforms via their Conversion APIs.
     """
@@ -315,7 +315,7 @@ async def conversion_tracking_pixel():
     """Return JavaScript pixel for client-side conversion tracking"""
     
     js_pixel = """
-// GA Technologies Conversion Tracking Pixel
+// GP MLOps Conversion Tracking Pixel
 (function() {
     var ga_tech = window.ga_tech || {};
     
@@ -356,7 +356,7 @@ async def conversion_tracking_pixel():
             },
             body: JSON.stringify(conversionData)
         }).catch(function(error) {
-            console.warn('GA Technologies conversion tracking failed:', error);
+            console.warn('GP MLOps conversion tracking failed:', error);
         });
     };
     

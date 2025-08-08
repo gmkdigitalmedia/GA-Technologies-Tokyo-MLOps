@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'GA Technologies MLOps Platform Infrastructure'
+Description: 'GP MLOps Platform Infrastructure'
 
 Parameters:
   Environment:
@@ -25,7 +25,7 @@ Resources:
   MLOpsS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub 'ga-technology-mlops-${Environment}-${AWS::AccountId}'
+      BucketName: !Sub 'gp-mlops-${Environment}-${AWS::AccountId}'
       VersioningConfiguration:
         Status: Enabled
       PublicAccessBlockConfiguration:

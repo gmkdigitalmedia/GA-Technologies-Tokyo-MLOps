@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Fix dependency conflicts in GA Technologies MLOps Platform
+# Fix dependency conflicts in GP MLOps MLOps Platform
 
 echo "🔧 Fixing dependency conflicts..."
 echo "================================"

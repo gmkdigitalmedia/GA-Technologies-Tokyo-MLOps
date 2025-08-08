@@ -66,7 +66,7 @@ async def get_mlops_status():
                 },
                 "snowflake": {
                     "status": "connected",
-                    "data_warehouse": "GA_TECHNOLOGY_DW"
+                    "data_warehouse": "GP_MLOPS_DW"
                 },
                 "monitoring": {
                     "prometheus": "http://localhost:2227",
@@ -445,7 +445,7 @@ async def get_data_pipeline_status():
         pipeline_status = {
             "snowflake_connection": {
                 "status": "connected",
-                "warehouse": "GA_TECHNOLOGY_DW",
+                "warehouse": "GP_MLOPS_DW",
                 "database": "REAL_ESTATE_ANALYTICS",
                 "last_sync": "2024-01-15T12:00:00Z"
             },

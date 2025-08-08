@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup KServe on EKS for GA Technologies MLOps Platform
+# Setup KServe on EKS for GP MLOps MLOps Platform
 
 set -e
 

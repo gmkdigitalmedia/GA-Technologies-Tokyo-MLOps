@@ -22,7 +22,7 @@ class AdServingEngine:
     def __init__(self):
         self.customer_inference = CustomerInferenceService()
         
-        # GA Technologies' primary target criteria
+        # GP MLOps' primary target criteria
         self.PRIMARY_TARGET_CRITERIA = {
             'min_age': 40,
             'max_age': 50,
@@ -99,7 +99,7 @@ class AdServingEngine:
             return None
     
     def _matches_primary_target(self, customer_data: Dict[str, Any]) -> bool:
-        """Check if customer matches GA Technologies' primary targeting criteria"""
+        """Check if customer matches GP MLOps' primary targeting criteria"""
         
         age = customer_data.get('age', 0)
         income = customer_data.get('income', 0)

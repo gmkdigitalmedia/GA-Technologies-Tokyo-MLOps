@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies - Core Services Only (Skip Airbyte)
+# GP MLOps - Core Services Only (Skip Airbyte)
 # Starts the essential MLOps services without Airbyte to avoid health check issues
 
 set -e
 
-echo "🚀 GA Technologies Core MLOps Services"
+echo "🚀 GP MLOps Core MLOps Services"
 echo "======================================"
 echo "Starting essential services (excluding Airbyte)..."
 echo

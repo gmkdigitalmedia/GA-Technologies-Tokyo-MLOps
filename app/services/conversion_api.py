@@ -49,7 +49,7 @@ class ConversionAPIClient:
             Results from each platform
         """
         if platforms is None:
-            platforms = ['facebook', 'google']  # GA Technologies' primary platforms
+            platforms = ['facebook', 'google']  # GP MLOps' primary platforms
         
         results = {}
         
@@ -222,7 +222,7 @@ class ConversionAPIClient:
 
 class ConversionTracker:
     """
-    Service to track and attribute conversions from GA Technologies' ad campaigns
+    Service to track and attribute conversions from GP MLOps' ad campaigns
     """
     
     def __init__(self):

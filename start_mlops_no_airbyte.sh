@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# GA Technologies Full MLOps Platform (Without Airbyte)
+# GP MLOps Full MLOps Platform (Without Airbyte)
 # Starts the complete MLOps platform without problematic Airbyte services
 
 set -e
 
-echo "🚀 GA Technologies Full MLOps Platform"
+echo "🚀 GP MLOps Full MLOps Platform"
 echo "======================================"
 echo "Starting MLOps stack (without Airbyte)..."
 echo "Components: FastAPI + MLflow + Dify + Monitoring"
@@ -135,7 +135,7 @@ check_service() {
 # Perform health checks
 echo "🏥 Performing health checks..."
 
-check_service "GA Technologies API" "http://localhost:2223/health"
+check_service "GP MLOps API" "http://localhost:2223/health"
 check_service "MLflow Server" "http://localhost:2226"
 check_service "Dify API" "http://localhost:2229/health"
 check_service "Dify Web Console" "http://localhost:2230"
@@ -147,7 +147,7 @@ echo "✅ MLOps Platform Started Successfully!"
 echo "====================================="
 echo
 echo "🌐 Access Points:"
-echo "   • GA Technologies API:     http://localhost:2223"
+echo "   • GP MLOps API:     http://localhost:2223"
 echo "   • API Documentation:       http://localhost:2223/docs"
 echo
 echo "🤖 MLOps Components:"
