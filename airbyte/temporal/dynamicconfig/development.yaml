@@ -1,0 +1,39 @@
+frontend.enableClientVersionCheck:
+  - value: false
+    constraints: {}
+
+history.persistenceVisibilityOpenMaxQPS:
+  - value: 3000
+    constraints: {}
+
+history.persistenceVisibilityClosedMaxQPS:
+  - value: 3000
+    constraints: {}
+
+frontend.enableDomainNotActiveAutoForwarding:
+  - value: true
+    constraints: {}
+
+frontend.enableUpdateWorkflowExecution:
+  - value: true
+    constraints: {}
+
+system.enableParentClosePolicy:
+  - value: true
+    constraints: {}
+
+system.enableCrossNamespaceParentPolicy:
+  - value: true
+    constraints: {}
+
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: false
+    constraints: {}
+
+frontend.enableSchedules:
+  - value: true
+    constraints: {}
+
+frontend.enableGlobalNamespace:
+  - value: false
+    constraints: {}

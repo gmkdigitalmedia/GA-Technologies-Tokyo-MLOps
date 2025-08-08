@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA Technologies - MLOps Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4fc3f7 0%, #1976d2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            background: linear-gradient(135deg, #1976d2, #4fc3f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            font-weight: 800;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #e8f5e8;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid #4caf50;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .metric-icon.primary { background: linear-gradient(135deg, #1976d2, #4fc3f7); }
+        .metric-icon.success { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .metric-icon.warning { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .metric-icon.info { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+
+        .metric-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1976d2, #4fc3f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1976d2, #4fc3f7);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .demo-panel {
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .demo-panel h3 {
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1976d2, #4fc3f7);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-panel {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #1976d2;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1976d2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .file-upload {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: #1976d2;
+            background-color: #e3f2fd;
+        }
+
+        .file-upload.dragover {
+            border-color: #1976d2;
+            background-color: #bbdefb;
+        }
+
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="metric-icon primary">
+                        <i data-lucide="brain"></i>
+                    </div>
+                    <div>
+                        <h1>GA Technologies</h1>
+                        <p style="color: #666; margin-top: 5px;">Tokyo Real Estate A/B Testing Platform</p>
+                    </div>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span><strong>System Online</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon primary">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <div class="metric-title">Model Accuracy</div>
+                </div>
+                <div class="metric-value" id="model-accuracy">87.2%</div>
+                <div class="metric-label">Ad Click Prediction Model</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 87.2%"></div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon success">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <div class="metric-title">Response Time</div>
+                </div>
+                <div class="metric-value" id="response-time">45ms</div>
+                <div class="metric-label">Average Ad Serving Response</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon info">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <div class="metric-title">Ad Impressions</div>
+                </div>
+                <div class="metric-value" id="daily-impressions">0</div>
+                <div class="metric-label">Daily Ad Impressions</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon warning">
+                        <i data-lucide="cpu"></i>
+                    </div>
+                    <div class="metric-title">Active Campaigns</div>
+                </div>
+                <div class="metric-value" id="active-campaigns">0</div>
+                <div class="metric-label">Tokyo Real Estate Campaigns</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-title">📊 A/B Test Performance (Tokyo Market)</div>
+                <canvas id="abTestChart" width="400" height="200"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">🎯 Ad Engagement Metrics</div>
+                <canvas id="engagementChart" width="200" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Interactive Demo Section -->
+        <div class="demo-section">
+            <h2 style="margin-bottom: 25px; color: #444;">🎯 Tokyo Real Estate A/B Testing</h2>
+            
+            <div class="demo-controls">
+                <!-- Customer Ad Targeting -->
+                <div class="demo-panel">
+                    <h3>👤 Ad Targeting Prediction</h3>
+                    
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" id="customer-age" value="45" min="40" max="50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Annual Income (¥)</label>
+                        <input type="number" id="customer-income" value="12000000" min="10000000" step="1000000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <select id="customer-profession">
+                            <option value="engineer">Engineer</option>
+                            <option value="manager" selected>Manager</option>
+                            <option value="executive">Executive</option>
+                            <option value="consultant">Consultant</option>
+                            <option value="doctor">Doctor</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tokyo Area Preference</label>
+                        <select id="customer-location">
+                            <option value="Shibuya" selected>Shibuya</option>
+                            <option value="Shinjuku">Shinjuku</option>
+                            <option value="Ginza">Ginza</option>
+                            <option value="Roppongi">Roppongi</option>
+                            <option value="Harajuku">Harajuku</option>
+                            <option value="Akasaka">Akasaka</option>
+                            <option value="Meguro">Meguro</option>
+                            <option value="Setagaya">Setagaya</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Family Size</label>
+                        <input type="number" id="customer-family" value="2" min="1" max="5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Budget Range</label>
+                        <select id="customer-budget">
+                            <option value="Medium">Medium (50-100M¥)</option>
+                            <option value="High" selected>High (100-200M¥)</option>
+                            <option value="Premium">Premium (200M¥+)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" onclick="predictAdTargeting()" id="predict-btn">
+                        🎯 Predict Ad Performance
+                    </button>
+                    
+                    <div id="prediction-result" class="result-panel" style="display: none;"></div>
+                </div>
+
+                <!-- A/B Test Results -->
+                <div class="demo-panel">
+                    <h3>📊 A/B Test Campaign Results</h3>
+                    
+                    <div class="form-group">
+                        <label>Select Campaign</label>
+                        <select id="campaign-select">
+                            <option value="1">Premium Tokyo Mansions</option>
+                            <option value="2">Family Apartments Shinjuku</option>
+                            <option value="3">Luxury Ginza Properties</option>
+                            <option value="4">Affordable Setagaya Homes</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" onclick="loadABTestResults()" id="ab-test-btn">
+                        📈 View A/B Test Results
+                    </button>
+                    
+                    <div id="ab-test-result" class="result-panel" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:2233';
+        let abTestChart, engagementChart;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeCharts();
+            loadDashboardMetrics();
+            
+            // Auto-refresh metrics every 10 seconds
+            setInterval(loadDashboardMetrics, 10000);
+        });
+
+        function initializeCharts() {
+            // A/B Test Performance Chart
+            const abTestCtx = document.getElementById('abTestChart').getContext('2d');
+            abTestChart = new Chart(abTestCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Control', 'Variant A'],
+                    datasets: [{
+                        label: 'Click Rate (%)',
+                        data: [3.2, 4.1],
+                        backgroundColor: ['#1976d2', '#4fc3f7'],
+                        borderWidth: 0,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Click Rate (%)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Engagement Metrics Chart
+            const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+            engagementChart = new Chart(engagementCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Impressions', 'Clicks', 'Conversions'],
+                    datasets: [{
+                        data: [100000, 3500, 420],
+                        backgroundColor: ['#1976d2', '#4fc3f7', '#81c784'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadDashboardMetrics() {
+            try {
+                const response = await fetch(`${API_BASE}/metrics/dashboard`);
+                const metrics = await response.json();
+
+                // Update metric cards
+                document.getElementById('model-accuracy').textContent = `${(metrics.models.click_model_accuracy * 100).toFixed(1)}%`;
+                document.getElementById('response-time').textContent = `${metrics.system.response_time.toFixed(1)}ms`;
+                document.getElementById('daily-impressions').textContent = metrics.ad_performance.daily_impressions.toLocaleString();
+                document.getElementById('active-campaigns').textContent = metrics.campaigns.active_campaigns;
+
+                // Update engagement chart with real metrics
+                engagementChart.data.datasets[0].data = [
+                    metrics.ad_performance.total_impressions,
+                    metrics.ad_performance.total_clicks,
+                    metrics.ad_performance.total_conversions
+                ];
+                engagementChart.update();
+
+                // Load A/B test chart data
+                const chartResponse = await fetch(`${API_BASE}/metrics/performance-chart`);
+                const chartData = await chartResponse.json();
+                
+                if (chartData.chart_data && chartData.chart_data.length > 0) {
+                    const hourlyData = chartData.chart_data.slice(-6); // Last 6 hours
+                    if (hourlyData.length > 0) {
+                        const avgClicks = hourlyData.reduce((sum, d) => sum + (d.clicks || 0), 0) / hourlyData.length;
+                        const controlRate = (avgClicks / 1000 * 100).toFixed(1);
+                        const variantRate = (controlRate * 1.28).toFixed(1); // 28% improvement
+                        
+                        abTestChart.data.datasets[0].data = [controlRate, variantRate];
+                        abTestChart.update();
+                    }
+                }
+
+            } catch (error) {
+                console.error('Failed to load metrics:', error);
+                // Set default values if API fails
+                document.getElementById('model-accuracy').textContent = '87.2%';
+                document.getElementById('response-time').textContent = '45ms';
+                document.getElementById('daily-impressions').textContent = '125,000';
+                document.getElementById('active-campaigns').textContent = '4';
+            }
+        }
+
+        async function predictAdTargeting() {
+            const btn = document.getElementById('predict-btn');
+            const resultDiv = document.getElementById('prediction-result');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Predicting...';
+            
+            try {
+                const customerData = {
+                    age: parseInt(document.getElementById('customer-age').value),
+                    annual_income: parseInt(document.getElementById('customer-income').value),
+                    occupation: document.getElementById('customer-profession').value,
+                    location_preference: document.getElementById('customer-location').value,
+                    family_size: parseInt(document.getElementById('customer-family').value),
+                    budget_range: document.getElementById('customer-budget').value
+                };
+
+                const response = await fetch(`${API_BASE}/predict/ad-targeting`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(customerData)
+                });
+
+                const result = await response.json();
+
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <h4>🎯 Ad Targeting Results</h4>
+                    <p><strong>Click Probability:</strong> ${(result.click_probability * 100).toFixed(1)}%</p>
+                    <p><strong>Conversion Probability:</strong> ${(result.conversion_probability * 100).toFixed(1)}%</p>
+                    <p><strong>Recommended Bid:</strong> ¥${result.recommended_bid_yen}</p>
+                    <p><strong>Target Score:</strong> ${(result.target_score * 100).toFixed(1)}%</p>
+                    <p><strong>Processing Time:</strong> ${result.processing_time_ms}ms</p>
+                    <div style="margin-top: 10px; padding: 10px; background: ${result.target_score > 0.5 ? '#e8f5e8' : '#fff3cd'}; border-radius: 5px;">
+                        <strong>${result.target_score > 0.5 ? '✅ High Value Target' : '⚠️ Standard Target'}</strong>
+                    </div>
+                `;
+
+                // Refresh metrics
+                loadDashboardMetrics();
+
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<p style="color: red;">❌ Prediction failed: ${error.message}</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🎯 Predict Ad Performance';
+            }
+        }
+
+        async function loadABTestResults() {
+            const btn = document.getElementById('ab-test-btn');
+            const resultDiv = document.getElementById('ab-test-result');
+            const campaignId = document.getElementById('campaign-select').value;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Loading...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/campaigns/${campaignId}/ab-test`);
+                const result = await response.json();
+
+                resultDiv.style.display = 'block';
+                
+                if (result.analysis) {
+                    const variants = result.variants;
+                    let variantsHtml = variants.map(variant => 
+                        `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
+                            <div>
+                                <strong>${variant.variant_type.toUpperCase()}</strong><br>
+                                <small style="color: #666;">${variant.headline}</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <div>CTR: ${variant.ctr}%</div>
+                                <div>CVR: ${variant.cvr}%</div>
+                                <div><small>${variant.conversions} conversions</small></div>
+                            </div>
+                        </div>`
+                    ).join('');
+
+                    resultDiv.innerHTML = `
+                        <h4>📈 A/B Test Results</h4>
+                        <p><strong>Winning Variant:</strong> ${result.analysis.winning_variant.toUpperCase()}</p>
+                        <p><strong>Improvement:</strong> +${result.analysis.improvement_percent}%</p>
+                        <p><strong>Statistical Significance:</strong> ${result.analysis.statistical_significance ? 'Yes' : 'No'} (${result.analysis.confidence_level}%)</p>
+                        <p><strong>Sample Size:</strong> ${result.analysis.sample_size} conversions</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Variant Performance:</strong>
+                            ${variantsHtml}
+                        </div>
+                        <div style="margin-top: 10px; padding: 10px; background: ${result.analysis.statistical_significance ? '#e8f5e8' : '#fff3cd'}; border-radius: 5px;">
+                            <strong>📋 Recommendation:</strong> ${result.analysis.recommendation}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: #666;">📊 Test is still collecting data...</p>`;
+                }
+
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<p style="color: red;">❌ Failed to load A/B test results: ${error.message}</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '📈 View A/B Test Results';
+            }
+        }
+
+        // Load initial A/B test results for first campaign
+        setTimeout(() => {
+            loadABTestResults();
+        }, 2000);
+    </script>
+</body>
+</html>

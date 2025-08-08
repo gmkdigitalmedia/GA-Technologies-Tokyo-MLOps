@@ -1,0 +1,300 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.fixed
+    ports:
+      - "2223:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/ga_platform
+      - REDIS_URL=redis://redis:6379
+      - SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT}
+      - SNOWFLAKE_USER=${SNOWFLAKE_USER}
+      - SNOWFLAKE_PASSWORD=${SNOWFLAKE_PASSWORD}
+      - SNOWFLAKE_DATABASE=${SNOWFLAKE_DATABASE}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ga_platform
+    ports:
+      - "2224:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - "2225:6379"
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.fixed
+    command: celery -A app.celery_app worker --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/ga_platform
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+
+  celery-beat:
+    build: .
+    command: celery -A app.celery_app beat --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/ga_platform
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+
+  mlflow:
+    image: python:3.9
+    command: >
+      bash -c "pip install mlflow==2.8.1 psycopg2-binary &&
+               mlflow server --backend-store-uri postgresql://postgres:password@postgres:5432/mlflow
+               --default-artifact-root /mlflow/artifacts --host 0.0.0.0 --port 5000"
+    ports:
+      - "2226:5000"
+    depends_on:
+      - postgres
+    volumes:
+      - mlflow_artifacts:/mlflow/artifacts
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "2227:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "2228:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+  # Dify LLM Workflow Management
+  dify-db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=dify
+      - POSTGRES_PASSWORD=difypassword
+      - POSTGRES_DB=dify
+    volumes:
+      - dify_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dify"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  dify-redis:
+    image: redis:7-alpine
+    volumes:
+      - dify_redis_data:/data
+
+  dify-sandbox:
+    image: langgenius/dify-sandbox:0.2.1
+    environment:
+      - API_KEY=dify-sandbox
+      - GIN_MODE=release
+      - WORKER_TIMEOUT=15
+    volumes:
+      - dify_sandbox_data:/var/lib/sandbox/data
+
+  dify-api:
+    image: langgenius/dify-api:0.6.13
+    environment:
+      - MODE=api
+      - LOG_LEVEL=INFO
+      - SECRET_KEY=sk-9f73s3ljTXVcMT3Blb3ljTqtsKiGHXVcMT3BlbkFJLK7U
+      - DATABASE_URL=postgresql://dify:difypassword@dify-db:5432/dify
+      - REDIS_URL=redis://dify-redis:6379
+      - CELERY_BROKER_URL=redis://dify-redis:6379/1
+      - CODE_EXECUTION_ENDPOINT=http://dify-sandbox:8194
+      - CODE_EXECUTION_API_KEY=dify-sandbox
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    ports:
+      - "2229:5001"
+    depends_on:
+      dify-db:
+        condition: service_healthy
+      dify-redis:
+        condition: service_started
+    volumes:
+      - dify_api_data:/app/api/storage
+
+  dify-worker:
+    image: langgenius/dify-api:0.6.13
+    environment:
+      - MODE=worker
+      - LOG_LEVEL=INFO
+      - SECRET_KEY=sk-9f73s3ljTXVcMT3Blb3ljTqtsKiGHXVcMT3BlbkFJLK7U
+      - DATABASE_URL=postgresql://dify:difypassword@dify-db:5432/dify
+      - REDIS_URL=redis://dify-redis:6379
+      - CELERY_BROKER_URL=redis://dify-redis:6379/1
+      - CODE_EXECUTION_ENDPOINT=http://dify-sandbox:8194
+      - CODE_EXECUTION_API_KEY=dify-sandbox
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    depends_on:
+      dify-db:
+        condition: service_healthy
+      dify-redis:
+        condition: service_started
+    volumes:
+      - dify_api_data:/app/api/storage
+
+  dify-web:
+    image: langgenius/dify-web:0.6.13
+    environment:
+      - CONSOLE_API_URL=http://localhost:2229
+      - APP_API_URL=http://localhost:2229
+    ports:
+      - "2230:3000"
+    depends_on:
+      - dify-api
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "2231:80"
+      - "2232:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - dify-web
+      - dify-api
+
+  # Airbyte Data Integration Platform
+  airbyte-bootloader:
+    image: airbyte/bootloader:0.50.33
+    container_name: airbyte-bootloader
+    environment:
+      - AIRBYTE_VERSION=0.50.33
+      - DATABASE_URL=jdbc:postgresql://airbyte-db:5432/airbyte
+      - DATABASE_USER=docker
+      - DATABASE_PASSWORD=docker
+    depends_on:
+      airbyte-db:
+        condition: service_healthy
+
+  airbyte-db:
+    image: airbyte/db:0.50.33
+    container_name: airbyte-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=airbyte
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - airbyte_db:/var/lib/postgresql/data/pgdata
+    ports:
+      - "2235:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docker -d airbyte"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  airbyte-worker:
+    image: airbyte/worker:0.50.33
+    container_name: airbyte-worker
+    restart: unless-stopped
+    environment:
+      - AIRBYTE_VERSION=0.50.33
+      - AUTO_DETECT_SCHEMA=true
+      - DATABASE_URL=jdbc:postgresql://airbyte-db:5432/airbyte
+      - DATABASE_USER=docker
+      - DATABASE_PASSWORD=docker
+      - LOCAL_ROOT=/tmp/airbyte_local
+      - WEBAPP_URL=http://airbyte-webapp:80
+      - WORKER_ENVIRONMENT=docker
+      - WORKSPACE_ROOT=/tmp/workspace
+      - WORKSPACE_DOCKER_MOUNT=airbyte_workspace
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - airbyte_workspace:/tmp/workspace
+      - airbyte_local:/tmp/airbyte_local
+    depends_on:
+      airbyte-bootloader:
+        condition: service_completed_successfully
+
+  airbyte-server:
+    image: airbyte/server:0.50.33
+    container_name: airbyte-server
+    restart: unless-stopped
+    environment:
+      - AIRBYTE_VERSION=0.50.33
+      - DATABASE_URL=jdbc:postgresql://airbyte-db:5432/airbyte
+      - DATABASE_USER=docker
+      - DATABASE_PASSWORD=docker
+      - WEBAPP_URL=http://airbyte-webapp:80
+    ports:
+      - "2236:8001"
+    depends_on:
+      airbyte-bootloader:
+        condition: service_completed_successfully
+
+  airbyte-webapp:
+    image: airbyte/webapp:0.50.33
+    container_name: airbyte-webapp
+    restart: unless-stopped
+    ports:
+      - "2237:80"
+    environment:
+      - AIRBYTE_VERSION=0.50.33
+      - API_URL=http://airbyte-server:8001/api/v1/
+    depends_on:
+      airbyte-bootloader:
+        condition: service_completed_successfully
+
+  airbyte-temporal:
+    image: airbyte/temporal:0.50.33
+    container_name: airbyte-temporal
+    restart: unless-stopped
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=docker
+      - POSTGRES_PWD=docker
+      - POSTGRES_SEEDS=airbyte-db
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development.yaml
+    volumes:
+      - ./airbyte/temporal/dynamicconfig:/etc/temporal/config/dynamicconfig
+    depends_on:
+      airbyte-db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  mlflow_artifacts:
+  grafana_data:
+  dify_db_data:
+  dify_redis_data:
+  dify_sandbox_data:
+  dify_api_data:
+  airbyte_db:
+  airbyte_workspace:
+  airbyte_local:

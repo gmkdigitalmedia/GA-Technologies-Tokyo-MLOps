@@ -1,0 +1,178 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ga-mlops
+  labels:
+    istio-injection: enabled
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: inference-config
+  namespace: ga-mlops
+data:
+  config.yaml: |
+    model_configs:
+      customer_value:
+        framework: sklearn
+        storage_uri: s3://ga-technology-mlops/models/customer_value/
+        runtime: kserve-sklearn
+      floorplan_detection:
+        framework: pytorch  
+        storage_uri: s3://ga-technology-mlops/models/floorplan/
+        runtime: kserve-pytorch
+
+---
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: customer-value-model
+  namespace: ga-mlops
+  annotations:
+    serving.kserve.io/deploymentMode: Serverless
+spec:
+  predictor:
+    serviceAccountName: kserve-service-account
+    sklearn:
+      storageUri: s3://ga-technology-mlops/models/customer_value/
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      env:
+        - name: STORAGE_URI
+          value: s3://ga-technology-mlops/models/customer_value/
+  transformer:
+    containers:
+    - name: transformer
+      image: ga-mlops/customer-transformer:latest
+      env:
+        - name: PREDICTOR_HOST
+          value: customer-value-model-predictor
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+
+---
+apiVersion: serving.kserve.io/v1beta1  
+kind: InferenceService
+metadata:
+  name: floorplan-detection-model
+  namespace: ga-mlops
+  annotations:
+    serving.kserve.io/deploymentMode: Serverless
+spec:
+  predictor:
+    serviceAccountName: kserve-service-account
+    pytorch:
+      storageUri: s3://ga-technology-mlops/models/floorplan/
+      resources:
+        limits:
+          cpu: 2000m
+          memory: 4Gi
+          nvidia.com/gpu: 1
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+      env:
+        - name: STORAGE_URI
+          value: s3://ga-technology-mlops/models/floorplan/
+        - name: MODEL_NAME
+          value: floorplan_detection_model
+  transformer:
+    containers:
+    - name: transformer  
+      image: ga-mlops/floorplan-transformer:latest
+      env:
+        - name: PREDICTOR_HOST
+          value: floorplan-detection-model-predictor
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kserve-service-account
+  namespace: ga-mlops
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/KServeS3AccessRole
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s3-credentials
+  namespace: ga-mlops
+  annotations:
+    serving.kserve.io/s3-endpoint: s3.amazonaws.com
+    serving.kserve.io/s3-usehttps: "1"
+    serving.kserve.io/s3-region: us-east-1
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: "YOUR_ACCESS_KEY"
+  AWS_SECRET_ACCESS_KEY: "YOUR_SECRET_KEY"
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ga-mlops-routing
+  namespace: ga-mlops
+spec:
+  hosts:
+  - ga-mlops-inference.example.com
+  gateways:
+  - ga-mlops-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /v1/models/customer-value
+    route:
+    - destination:
+        host: customer-value-model-predictor
+  - match:
+    - uri:
+        prefix: /v1/models/floorplan
+    route:
+    - destination:
+        host: floorplan-detection-model-predictor
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: ga-mlops-gateway
+  namespace: ga-mlops
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - ga-mlops-inference.example.com
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ga-mlops-tls-secret
+    hosts:
+    - ga-mlops-inference.example.com

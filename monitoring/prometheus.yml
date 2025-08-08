@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'ga-api'
+    static_configs:
+      - targets: ['api:8000']
+    metrics_path: /metrics
+    scrape_interval: 5s
+
+  - job_name: 'mlflow'
+    static_configs:
+      - targets: ['mlflow:5000']
+    metrics_path: /metrics
+    scrape_interval: 30s
+
+  - job_name: 'dify-api'
+    static_configs:
+      - targets: ['dify-api:5001']
+    metrics_path: /metrics
+    scrape_interval: 30s
