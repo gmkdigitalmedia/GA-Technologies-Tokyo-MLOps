@@ -13,52 +13,52 @@ def test_imports():
         import fastapi
         import uvicorn
         import pydantic
-        print("✅ Web framework packages OK")
+        print("PASS Web framework packages OK")
         
         # Database
         import sqlalchemy
         import alembic
         import psycopg2
-        print("✅ Database packages OK")
+        print("PASS Database packages OK")
         
         # Data processing
         import pandas
         import numpy
-        print("✅ Data processing packages OK")
+        print("PASS Data processing packages OK")
         
         # ML
         import sklearn
-        print("✅ ML packages OK")
+        print("PASS ML packages OK")
         
         # Snowflake
         import snowflake.connector
         import snowflake.sqlalchemy
-        print("✅ Snowflake packages OK")
+        print("PASS Snowflake packages OK")
         
         # MLOps
         import mlflow
-        print("✅ MLflow OK")
+        print("PASS MLflow OK")
         
         # Cache/Queue
         import redis
         import celery
-        print("✅ Redis/Celery OK")
+        print("PASS Redis/Celery OK")
         
         # AWS
         import boto3
-        print("✅ AWS packages OK")
+        print("PASS AWS packages OK")
         
         # API
         import aiohttp
         import httpx
-        print("✅ API packages OK")
+        print("PASS API packages OK")
         
         print("\n🎉 All required packages imported successfully!")
         print("Dependencies are properly resolved.")
         return True
         
     except ImportError as e:
-        print(f"❌ Import error: {e}")
+        print(f"FAIL Import error: {e}")
         return False
 
 if __name__ == "__main__":

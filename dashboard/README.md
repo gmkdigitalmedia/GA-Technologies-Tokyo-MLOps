@@ -49,8 +49,8 @@ python3 frontend.py
 
 ## 🌐 **Access Points**
 
-- **📊 Main Dashboard**: http://localhost:2222
-- **🔧 Backend API**: http://localhost:8888
+- **CHART Main Dashboard**: http://localhost:2222
+- **FIX Backend API**: http://localhost:8888
 - **📖 API Documentation**: http://localhost:8888/docs
 
 ---

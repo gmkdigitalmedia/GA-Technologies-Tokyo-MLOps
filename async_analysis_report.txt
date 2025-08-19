@@ -1,0 +1,58 @@
+================================================================================
+GP MLOPS PLATFORM - ASYNC CODE ANALYSIS REPORT
+================================================================================
+Analysis executed at: 2025-08-19 09:44:13
+
+ASYNC SYNTAX FUNCTIONALITY:
+--------------------------------------------------
+✓ basic_async: success (0.0103s)
+✓ concurrent_execution: success (0.0105s)
+✓ async_context_manager: success (0.0206s)
+
+CODEBASE ASYNC ANALYSIS:
+--------------------------------------------------
+Files with async functions: 14
+Total async functions found: 100
+
+✓ app/main.py: 1 async functions
+    Functions: root
+✓ dashboard/backend.py: 10 async functions
+    Functions: startup_event, collect_system_metrics, simulate_ad_interactions (+7 more)
+    ⚠️  4 potential issues found
+✓ technical_demo/api_demo.py: 6 async functions
+    Functions: startup_event, root, predict_customer (+3 more)
+    ⚠️  2 potential issues found
+✓ core/monitoring.py: 2 async functions
+    Functions: prometheus_middleware, metrics
+✗ services/airbyte_service.py: 11 async functions
+    Functions: initialize_workspace, get_existing_workspace, create_snowflake_source (+8 more)
+    ⚠️  19 potential issues found
+✓ services/dify_service.py: 3 async functions
+    Functions: create_customer_interaction_workflow, create_property_description_workflow, create_market_analysis_workflow
+    ⚠️  3 potential issues found
+✓ services/mlops_pipeline.py: 16 async functions
+    Functions: run_full_pipeline, _setup_airbyte_pipeline, _extract_and_prepare_data (+13 more)
+    ⚠️  15 potential issues found
+✗ endpoints/advertising.py: 10 async functions
+    Functions: serve_ad, track_interaction, get_campaigns (+7 more)
+✗ endpoints/conversion_api.py: 6 async functions
+    Functions: track_conversion_event, get_conversion_funnel, get_customer_attribution_history (+3 more)
+✗ endpoints/customer.py: 5 async functions
+    Functions: create_customer, get_customer, log_interaction (+2 more)
+✗ endpoints/floorplan.py: 6 async functions
+    Functions: upload_floorplan_image, analyze_floorplan, get_floorplan_analyses (+3 more)
+    ⚠️  1 potential issues found
+✓ endpoints/health.py: 2 async functions
+    Functions: health_check, detailed_health_check
+✓ endpoints/mlops.py: 14 async functions
+    Functions: get_mlops_status, run_mlops_pipeline, get_model_registry (+11 more)
+✗ endpoints/predictions.py: 8 async functions
+    Functions: batch_predictions, get_batch_job_status, train_model (+5 more)
+
+================================================================================
+ASYNC HEALTH SUMMARY
+================================================================================
+Syntax Tests: 3/3 passed
+Files with Async: 14
+Total Async Functions: 100
+Async Health: EXCELLENT

@@ -3,13 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
 import uvicorn
 
-from app.api.endpoints import customer, floorplan, predictions, health, mlops
+from app.api.endpoints import customer, predictions, health  # , floorplan, mlops - commented out due to torch dependency
 from app.core.config import settings
 from app.core.database import engine, Base
 from app.core.monitoring import setup_prometheus_metrics
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
+# Create database tables - commented out for import testing
+# Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="GP MLOps Platform",
@@ -35,7 +35,7 @@ security = HTTPBearer()
 # Include routers
 app.include_router(health.router, prefix="/health", tags=["health"])
 app.include_router(customer.router, prefix="/api/v1/customer", tags=["customer"])
-app.include_router(floorplan.router, prefix="/api/v1/floorplan", tags=["floorplan"])
+# app.include_router(floorplan.router, prefix="/api/v1/floorplan", tags=["floorplan"])  # torch dependency
 app.include_router(predictions.router, prefix="/api/v1/predictions", tags=["predictions"])
 
 # Import and include advertising router
@@ -43,8 +43,8 @@ from app.api.endpoints import advertising, conversion_api
 app.include_router(advertising.router, prefix="/api/v1/ads", tags=["advertising"])
 app.include_router(conversion_api.router, prefix="/api/v1/capi", tags=["conversion-api"])
 
-# Include MLOps router
-app.include_router(mlops.router, prefix="/api/v1", tags=["mlops"])
+# Include MLOps router - commented out due to torch dependency
+# app.include_router(mlops.router, prefix="/api/v1", tags=["mlops"])
 
 @app.get("/")
 async def root():

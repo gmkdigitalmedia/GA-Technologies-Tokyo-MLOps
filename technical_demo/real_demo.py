@@ -396,7 +396,7 @@ def run_real_demo():
     # 1. Train and test ML models
     print("1. 🤖 Training Customer Inference Models...")
     training_results = mlops_demo.train_customer_models()
-    print(f"   ✅ Model trained on {training_results['training_samples']} samples")
+    print(f"   PASS Model trained on {training_results['training_samples']} samples")
     print()
     
     # 2. Test customer prediction
@@ -458,14 +458,14 @@ def run_real_demo():
     
     # 5. System health check
     print("5. ⚙️  System Health Check...")
-    print(f"   Database: ✅ Connected ({mlops_demo.db_path})")
-    print(f"   ML Models: ✅ Loaded ({len(mlops_demo.models)} models)")
-    print(f"   Computer Vision: ✅ Operational")
-    print(f"   A/B Testing: ✅ Active ({len(ab_testing.tests)} tests)")
+    print(f"   Database: PASS Connected ({mlops_demo.db_path})")
+    print(f"   ML Models: PASS Loaded ({len(mlops_demo.models)} models)")
+    print(f"   Computer Vision: PASS Operational")
+    print(f"   A/B Testing: PASS Active ({len(ab_testing.tests)} tests)")
     print()
     
     print("=" * 80)
-    print("✅ Technical Demo Completed Successfully")
+    print("PASS Technical Demo Completed Successfully")
     print("=" * 80)
     print("This demonstrates real MLOps capabilities:")
     print("• Trained ML models with actual accuracy metrics")

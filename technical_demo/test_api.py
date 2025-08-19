@@ -24,12 +24,12 @@ def test_api_endpoints():
         response = requests.get(f"{API_BASE_URL}/health", timeout=5)
         if response.status_code == 200:
             health = response.json()
-            print(f"   ✅ API Status: {health['status']}")
+            print(f"   PASS API Status: {health['status']}")
             print(f"   📊 Models Loaded: {health['models_loaded']}")
         else:
-            print(f"   ❌ Health check failed: {response.status_code}")
+            print(f"   FAIL Health check failed: {response.status_code}")
     except requests.exceptions.RequestException as e:
-        print(f"   ❌ Connection failed: {e}")
+        print(f"   FAIL Connection failed: {e}")
         return False
     
     print()
@@ -49,9 +49,9 @@ def test_api_endpoints():
             print(f"   🎯 Model Confidence: {prediction['model_confidence']:.3f}")
             print(f"   ⚡ Processing Time: {prediction['processing_time_ms']:.1f}ms")
         else:
-            print(f"   ❌ Prediction failed: {response.status_code}")
+            print(f"   FAIL Prediction failed: {response.status_code}")
     except requests.exceptions.RequestException as e:
-        print(f"   ❌ Prediction request failed: {e}")
+        print(f"   FAIL Prediction request failed: {e}")
     
     print()
     
@@ -79,9 +79,9 @@ def test_api_endpoints():
             print(f"   🎯 Model Confidence: {prediction['model_confidence']:.3f}")
             print(f"   ⚡ Processing Time: {prediction['processing_time_ms']:.1f}ms")
         else:
-            print(f"   ❌ Custom prediction failed: {response.status_code}")
+            print(f"   FAIL Custom prediction failed: {response.status_code}")
     except requests.exceptions.RequestException as e:
-        print(f"   ❌ Custom prediction failed: {e}")
+        print(f"   FAIL Custom prediction failed: {e}")
     
     print()
     
@@ -119,16 +119,16 @@ def test_api_endpoints():
                 print(f"   📍 {room['type'].replace('_', ' ').title()}: "
                      f"{room['confidence']:.2f} confidence")
         else:
-            print(f"   ❌ Floorplan analysis failed: {response.status_code}")
+            print(f"   FAIL Floorplan analysis failed: {response.status_code}")
             
     except requests.exceptions.RequestException as e:
-        print(f"   ❌ Floorplan analysis failed: {e}")
+        print(f"   FAIL Floorplan analysis failed: {e}")
     
     print()
     print("=" * 60)
-    print("✅ API Testing Complete")
+    print("PASS API Testing Complete")
     print("📊 All endpoints are working with real ML models")
-    print("🚀 Ready for production integration")
+    print("LAUNCH Ready for production integration")
     
     return True
 

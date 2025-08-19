@@ -5,41 +5,41 @@
 
 set -e
 
-echo "🚀 GP MLOps Services Startup"
+echo "LAUNCH GP MLOps Services Startup"
 echo "===================================="
 echo "Starting database and cache services only..."
 echo
 
 # Start only the services that use pre-built images
-echo "📦 Starting PostgreSQL..."
+echo "PKG Starting PostgreSQL..."
 docker-compose up -d postgres
 
-echo "📦 Starting Redis..."
+echo "PKG Starting Redis..."
 docker-compose up -d redis
 
-echo "📦 Starting MLflow..."
+echo "PKG Starting MLflow..."
 docker-compose up -d mlflow 2>/dev/null || echo "MLflow service not configured"
 
-echo "📦 Starting Prometheus..."
+echo "PKG Starting Prometheus..."
 docker-compose up -d prometheus 2>/dev/null || echo "Prometheus service not configured"
 
-echo "📦 Starting Grafana..."
+echo "PKG Starting Grafana..."
 docker-compose up -d grafana 2>/dev/null || echo "Grafana service not configured"
 
 echo
-echo "✅ Database services started!"
+echo "PASS Database services started!"
 echo
 echo "🌐 Available Services:"
 echo "   • PostgreSQL: localhost:2224"
 echo "   • Redis: localhost:2225"
 echo
-echo "📊 To start the main dashboard (recommended):"
+echo "CHART To start the main dashboard (recommended):"
 echo "   cd dashboard && ./start_dashboard.sh"
 echo
-echo "🔧 The dashboard includes:"
+echo "FIX The dashboard includes:"
 echo "   • Working ML models"
 echo "   • Tokyo real estate A/B testing"
 echo "   • Interactive visualizations"
 echo "   • Port 2222 (frontend) & 2233 (backend)"
 echo
-echo "Ready to demo! 🎯"
+echo "Ready to demo! TARGET"

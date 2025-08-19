@@ -15,11 +15,11 @@ CLUSTER_NAME=${1:-ga-mlops-cluster}
 AWS_REGION=${AWS_REGION:-us-east-1}
 KSERVE_VERSION=${KSERVE_VERSION:-v0.11.0}
 
-echo -e "${GREEN}🚀 Setting up KServe on EKS cluster: ${CLUSTER_NAME}${NC}"
+echo -e "${GREEN}LAUNCH Setting up KServe on EKS cluster: ${CLUSTER_NAME}${NC}"
 
 # Function to print status
 print_status() {
-    echo -e "${GREEN}✅ $1${NC}"
+    echo -e "${GREEN}PASS $1${NC}"
 }
 
 print_warning() {
@@ -27,7 +27,7 @@ print_warning() {
 }
 
 print_error() {
-    echo -e "${RED}❌ $1${NC}"
+    echo -e "${RED}FAIL $1${NC}"
 }
 
 # Check prerequisites
@@ -341,7 +341,7 @@ main() {
     deploy_models
     test_deployment
     
-    echo -e "${GREEN}🎉 KServe setup completed successfully!${NC}"
+    echo -e "${GREEN}CELEBRATE KServe setup completed successfully!${NC}"
     echo -e "${GREEN}Models are now available via KServe inference endpoints${NC}"
     
     # Print useful information

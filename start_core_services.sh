@@ -5,16 +5,16 @@
 
 set -e
 
-echo "🚀 GP MLOps Core MLOps Services"
+echo "LAUNCH GP MLOps Core MLOps Services"
 echo "======================================"
 echo "Starting essential services (excluding Airbyte)..."
 echo
 
 # Fix dependencies first
-echo "🔧 Applying dependency fixes..."
+echo "FIX Applying dependency fixes..."
 ./fix_dependencies.sh
 
-echo "📦 Starting core services..."
+echo "PKG Starting core services..."
 
 # Core database services
 echo "   - Starting PostgreSQL..."
@@ -58,15 +58,15 @@ docker-compose up -d dify-web
 # Try to start the main API (may fail due to build issues, but that's OK)
 echo "   - Attempting to start main API..."
 if docker-compose up -d api; then
-    echo "   ✅ Main API started successfully"
+    echo "   PASS Main API started successfully"
 else
     echo "   ⚠️ Main API build failed (expected - use dashboard instead)"
 fi
 
 echo
-echo "✅ Core MLOps services started!"
+echo "PASS Core MLOps services started!"
 echo
-echo "🔍 Service Status:"
+echo "SEARCH Service Status:"
 docker-compose ps
 
 echo
@@ -83,8 +83,8 @@ echo "⚠️ Skipped Services (due to health check issues):"
 echo "   • Airbyte (can be started separately)"
 echo "   • Main API (if build failed)"
 echo
-echo "🎯 For working demo, run:"
+echo "TARGET For working demo, run:"
 echo "   cd dashboard && ./start_dashboard.sh"
 echo
-echo "💡 To check service logs:"
+echo "INFO To check service logs:"
 echo "   docker-compose logs -f [service_name]"

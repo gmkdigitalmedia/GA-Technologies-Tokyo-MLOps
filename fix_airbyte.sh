@@ -2,7 +2,7 @@
 
 # Fix Airbyte Database Health Check Issues
 
-echo "🔧 Fixing Airbyte database health check..."
+echo "FIX Fixing Airbyte database health check..."
 echo "========================================="
 
 # Stop any existing Airbyte services
@@ -18,18 +18,18 @@ echo "🗑️ Clearing Airbyte volumes..."
 docker volume rm ga-airbyte_db ga-airbyte_workspace ga-airbyte_local 2>/dev/null || true
 
 # Start Airbyte database with extended timeout
-echo "📦 Starting Airbyte database (with extended timeout)..."
+echo "PKG Starting Airbyte database (with extended timeout)..."
 docker-compose up -d airbyte-db
 
 # Wait for health check
 echo "⏳ Waiting for Airbyte database to become healthy..."
 for i in {1..20}; do
     if docker-compose ps airbyte-db | grep -q "healthy"; then
-        echo "✅ Airbyte database is healthy!"
+        echo "PASS Airbyte database is healthy!"
         break
     elif [ $i -eq 20 ]; then
-        echo "❌ Airbyte database failed to become healthy after 10 minutes"
-        echo "🔍 Checking logs..."
+        echo "FAIL Airbyte database failed to become healthy after 10 minutes"
+        echo "SEARCH Checking logs..."
         docker-compose logs airbyte-db | tail -20
         exit 1
     else
@@ -39,23 +39,23 @@ for i in {1..20}; do
 done
 
 # Start the rest of Airbyte services
-echo "🚀 Starting Airbyte bootloader..."
+echo "LAUNCH Starting Airbyte bootloader..."
 docker-compose up -d airbyte-bootloader
 
 echo "⏳ Waiting for bootloader to complete..."
 sleep 30
 
-echo "🚀 Starting remaining Airbyte services..."
+echo "LAUNCH Starting remaining Airbyte services..."
 docker-compose up -d airbyte-worker airbyte-server airbyte-webapp airbyte-temporal
 
 echo
-echo "✅ Airbyte services started!"
+echo "PASS Airbyte services started!"
 echo
 echo "🌐 Airbyte Access:"
 echo "   • Web UI: http://localhost:2237"
 echo "   • API: http://localhost:2236"
 echo "   • Database: localhost:2235"
 echo
-echo "🔍 Service Status:"
+echo "SEARCH Service Status:"
 docker-compose ps | grep airbyte
 echo

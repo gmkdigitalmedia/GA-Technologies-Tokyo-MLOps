@@ -14,25 +14,25 @@ echo
 
 # Check Python
 if ! command -v python3 &> /dev/null; then
-    echo "❌ Python 3 not found. Please install Python 3.8+"
+    echo "FAIL Python 3 not found. Please install Python 3.8+"
     exit 1
 fi
 
 # Install requirements
-echo "📦 Installing required packages..."
+echo "PKG Installing required packages..."
 pip3 install numpy pandas scikit-learn opencv-python pillow torch torchvision --quiet
 
-echo "✅ Dependencies installed"
+echo "PASS Dependencies installed"
 echo
 
 # Run the demo
-echo "🚀 Running Technical Demo..."
+echo "LAUNCH Running Technical Demo..."
 echo
 
 python3 real_demo.py
 
 echo
-echo "✅ Demo completed successfully!"
+echo "PASS Demo completed successfully!"
 echo
 echo "What you just saw:"
 echo "• Real ML model training with actual accuracy metrics"

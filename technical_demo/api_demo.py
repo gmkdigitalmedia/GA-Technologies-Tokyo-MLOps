@@ -234,7 +234,7 @@ async def sample_prediction():
     }
 
 if __name__ == "__main__":
-    print("🚀 Starting GP MLOps Demo API...")
+    print("LAUNCH Starting GP MLOps Demo API...")
     print("📊 Training ML models...")
     print("🔗 API will be available at: http://localhost:2233")
     print("📖 Documentation at: http://localhost:2233/docs")

@@ -15,11 +15,11 @@ ENVIRONMENT=${1:-dev}
 AWS_REGION=${AWS_REGION:-us-east-1}
 STACK_NAME="gp-mlops-${ENVIRONMENT}"
 
-echo -e "${GREEN}🚀 Deploying GP MLOps Platform - Environment: ${ENVIRONMENT}${NC}"
+echo -e "${GREEN}LAUNCH Deploying GP MLOps Platform - Environment: ${ENVIRONMENT}${NC}"
 
 # Function to print status
 print_status() {
-    echo -e "${GREEN}✅ $1${NC}"
+    echo -e "${GREEN}PASS $1${NC}"
 }
 
 print_warning() {
@@ -27,7 +27,7 @@ print_warning() {
 }
 
 print_error() {
-    echo -e "${RED}❌ $1${NC}"
+    echo -e "${RED}FAIL $1${NC}"
 }
 
 # Check prerequisites
@@ -217,7 +217,7 @@ main() {
     deploy_application
     setup_monitoring
     
-    echo -e "${GREEN}🎉 Deployment completed successfully!${NC}"
+    echo -e "${GREEN}CELEBRATE Deployment completed successfully!${NC}"
     echo -e "${GREEN}API will be available at the ALB endpoint from the CloudFormation outputs${NC}"
     
     # Print useful information

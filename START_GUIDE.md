@@ -1,8 +1,8 @@
-# 🚀 GP MLOps MLOps Platform - Startup Guide
+# LAUNCH GP MLOps MLOps Platform - Startup Guide
 
-## ⚡ **Quick Start Options**
+## FAST **Quick Start Options**
 
-### **Option 1: Working Demo (Fastest) ⭐**
+### **Option 1: Working Demo (Fastest) STAR**
 ```bash
 cd dashboard
 ./start_dashboard.sh
@@ -16,9 +16,9 @@ cd dashboard
 ./start_core_services.sh
 ```
 **Result**: All essential MLOps services except Airbyte
-- ✅ PostgreSQL, Redis, MLflow
-- ✅ Prometheus, Grafana monitoring
-- ✅ Dify LLM workflows
+- PASS PostgreSQL, Redis, MLflow
+- PASS Prometheus, Grafana monitoring
+- PASS Dify LLM workflows
 - ⚠️ Skips Airbyte (due to health check issues)
 
 ---
@@ -31,7 +31,7 @@ cd dashboard
 
 ---
 
-## 🔧 **Troubleshooting**
+## FIX **Troubleshooting**
 
 ### **If Airbyte Database is Unhealthy**
 ```bash
@@ -68,19 +68,19 @@ taskkill /PID <PID> /F
 
 | Service | URL | Status | Purpose |
 |---------|-----|---------|---------|
-| **Tokyo Dashboard** | http://localhost:2222 | ✅ Working | Main ML demo |
-| **Dashboard API** | http://localhost:2233 | ✅ Working | Backend API |
+| **Tokyo Dashboard** | http://localhost:2222 | PASS Working | Main ML demo |
+| **Dashboard API** | http://localhost:2233 | PASS Working | Backend API |
 | **MLOps Platform** | http://localhost:2223 | ⚠️ May fail | Full platform API |
-| **MLflow** | http://localhost:2226 | ✅ Working | Model registry |
-| **Grafana** | http://localhost:2228 | ✅ Working | Monitoring dashboards |
-| **Dify Console** | http://localhost:2230 | ✅ Working | LLM workflows |
+| **MLflow** | http://localhost:2226 | PASS Working | Model registry |
+| **Grafana** | http://localhost:2228 | PASS Working | Monitoring dashboards |
+| **Dify Console** | http://localhost:2230 | PASS Working | LLM workflows |
 | **Airbyte** | http://localhost:2237 | ⚠️ Health issues | Data integration |
 
 ---
 
-## 📊 **What Works vs. What May Fail**
+## CHART **What Works vs. What May Fail**
 
-### **✅ Guaranteed to Work:**
+### **PASS Guaranteed to Work:**
 - **Dashboard Demo** (`cd dashboard && ./start_dashboard.sh`)
 - **Pre-built services** (PostgreSQL, Redis, MLflow, Grafana)
 - **Core monitoring** and basic MLOps functionality
@@ -90,14 +90,14 @@ taskkill /PID <PID> /F
 - **Airbyte database** (health check timeouts)
 - **Full Docker Compose** (complex dependencies)
 
-### **🎯 Recommended Flow:**
+### **TARGET Recommended Flow:**
 1. Start with the dashboard demo to show working ML
 2. Use core services script for MLOps components
 3. Fix specific issues (Airbyte, API build) as needed
 
 ---
 
-## 🔍 **Checking Service Status**
+## SEARCH **Checking Service Status**
 
 ```bash
 # Check all services
@@ -114,7 +114,7 @@ curl http://localhost:2226  # MLflow
 
 ---
 
-## 💡 **Pro Tips**
+## INFO **Pro Tips**
 
 1. **Start with dashboard demo first** - it always works and shows real ML
 2. **Use core services script** - avoids most Docker build issues  
@@ -124,4 +124,4 @@ curl http://localhost:2226  # MLflow
 
 ---
 
-**🎯 Ready to demo? Start with: `cd dashboard && ./start_dashboard.sh`**
+**TARGET Ready to demo? Start with: `cd dashboard && ./start_dashboard.sh`**

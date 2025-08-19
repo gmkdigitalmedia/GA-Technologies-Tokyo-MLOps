@@ -4,7 +4,7 @@
 
 This repository contains **three different demo types** for different audiences:
 
-### 1. 🚀 **Main Dashboard** (`/dashboard/`)
+### 1. LAUNCH **Main Dashboard** (`/dashboard/`)
 **Best for: Live demos, technical presentations, quick showcase**
 - **Primary Interface**: Tokyo Real Estate A/B Testing Dashboard
 - **Ports**: Frontend (2222), Backend (2233)
@@ -17,7 +17,7 @@ This repository contains **three different demo types** for different audiences:
 - **Audience**: C-level executives, board members, investors
 - **Features**: Revenue dashboards, market analysis, competitive positioning
 
-### 3. 🔧 **Technical Demo** (`/technical_demo/`)
+### 3. FIX **Technical Demo** (`/technical_demo/`)
 **Best for: Technical teams, developers, architects**
 - **Focus**: MLOps pipeline, model development, system architecture
 - **Audience**: Engineering teams, technical stakeholders, developers
@@ -55,7 +55,7 @@ cd /mnt/c/Users/ibm/Documents/GA
 
 ---
 
-## 📊 Service Ports Reference
+## CHART Service Ports Reference
 
 ### **Core Services**
 - **2222**: Main Dashboard (Frontend)
@@ -101,7 +101,7 @@ cd /mnt/c/Users/ibm/Documents/GA
 
 ---
 
-## 🔧 Troubleshooting
+## FIX Troubleshooting
 
 ### **Port Conflicts**
 If ports are in use:
@@ -149,7 +149,7 @@ docker-compose up -d postgres redis
 
 ---
 
-## 🎯 **Recommendation by Audience**
+## TARGET **Recommendation by Audience**
 
 ### **First-time Visitors**
 Start with: **Main Dashboard** (`/dashboard/`)

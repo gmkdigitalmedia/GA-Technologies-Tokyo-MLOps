@@ -37,7 +37,7 @@ def start_frontend_server():
     print(f"🔗 Dashboard URL: http://localhost:2222")
     print(f"📊 Backend API: http://localhost:2233")
     print("=" * 50)
-    print("✅ Frontend server started on port 2222")
+    print("PASS Frontend server started on port 2222")
     print("💡 Make sure backend is running on port 2233")
     print()
     

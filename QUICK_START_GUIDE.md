@@ -1,4 +1,4 @@
-# 🚀 GP MLOps Platform - Quick Start Guide
+# LAUNCH GP MLOps Platform - Quick Start Guide
 
 ## **Prerequisites**
 
@@ -300,4 +300,4 @@ If you encounter issues:
 
 ---
 
-**Ready to go! Start with Option 1 (Quick Start) for fastest results.** 🚀
+**Ready to go! Start with Option 1 (Quick Start) for fastest results.** LAUNCH

@@ -52,10 +52,10 @@ def create_sample_campaign():
     if response.status_code == 200:
         campaign_result = response.json()
         campaign_id = campaign_result['campaign_id']
-        print(f"✅ Campaign created: ID {campaign_id}")
+        print(f"PASS Campaign created: ID {campaign_id}")
         return campaign_id
     else:
-        print(f"❌ Campaign creation failed: {response.text}")
+        print(f"FAIL Campaign creation failed: {response.text}")
         return None
 
 def create_ab_test_creatives(campaign_id):
@@ -95,25 +95,25 @@ def create_ab_test_creatives(campaign_id):
         if response.status_code == 200:
             creative_result = response.json()
             creative_ids.append(creative_result['creative_id'])
-            print(f"✅ Creative created: {creative_data['variant_type']} - ID {creative_result['creative_id']}")
+            print(f"PASS Creative created: {creative_data['variant_type']} - ID {creative_result['creative_id']}")
         else:
-            print(f"❌ Creative creation failed: {response.text}")
+            print(f"FAIL Creative creation failed: {response.text}")
     
     return creative_ids
 
 def activate_campaign(campaign_id):
     """Activate the campaign to start serving ads"""
     
-    print("🚀 Activating campaign...")
+    print("LAUNCH Activating campaign...")
     
     response = requests.put(f"{API_ENDPOINTS['activate_campaign']}/{campaign_id}/status", 
                            params={"status": "active"})
     
     if response.status_code == 200:
-        print("✅ Campaign activated and ready to serve ads")
+        print("PASS Campaign activated and ready to serve ads")
         return True
     else:
-        print(f"❌ Campaign activation failed: {response.text}")
+        print(f"FAIL Campaign activation failed: {response.text}")
         return False
 
 def simulate_customer_requests(num_requests=10):
@@ -159,11 +159,11 @@ def simulate_customer_requests(num_requests=10):
             })
             print(f"📺 Ad served to customer {customer['id']}: {ad_response['variant_type']}")
         else:
-            print(f"❌ Ad serving failed for customer {customer['id']}: {response.text}")
+            print(f"FAIL Ad serving failed for customer {customer['id']}: {response.text}")
         
         time.sleep(0.1)  # Brief pause between requests
     
-    print(f"✅ Served {len(served_ads)} ads successfully")
+    print(f"PASS Served {len(served_ads)} ads successfully")
     return served_ads
 
 def simulate_user_interactions(served_ads):
@@ -226,7 +226,7 @@ def simulate_user_interactions(served_ads):
         
         time.sleep(0.1)
     
-    print(f"✅ Tracked {len(interactions)} interactions")
+    print(f"PASS Tracked {len(interactions)} interactions")
     return interactions
 
 def analyze_campaign_performance(campaign_id):
@@ -264,7 +264,7 @@ def analyze_campaign_performance(campaign_id):
         print(f"\n💡 Recommendation: {ab_results['recommendation']}")
         
     else:
-        print(f"❌ A/B test analysis failed: {ab_test_response.text}")
+        print(f"FAIL A/B test analysis failed: {ab_test_response.text}")
 
 def main():
     """Run the complete ad serving example"""

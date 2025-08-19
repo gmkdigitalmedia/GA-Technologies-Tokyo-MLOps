@@ -385,19 +385,19 @@
         <!-- Charts Section -->
         <div class="charts-section">
             <div class="chart-container">
-                <div class="chart-title">📊 A/B Test Performance (Tokyo Market)</div>
+                <div class="chart-title">CHART A/B Test Performance (Tokyo Market)</div>
                 <canvas id="abTestChart" width="400" height="200"></canvas>
             </div>
             
             <div class="chart-container">
-                <div class="chart-title">🎯 Ad Engagement Metrics</div>
+                <div class="chart-title">TARGET Ad Engagement Metrics</div>
                 <canvas id="engagementChart" width="200" height="200"></canvas>
             </div>
         </div>
 
         <!-- Interactive Demo Section -->
         <div class="demo-section">
-            <h2 style="margin-bottom: 25px; color: #444;">🎯 Tokyo Real Estate A/B Testing</h2>
+            <h2 style="margin-bottom: 25px; color: #444;">TARGET Tokyo Real Estate A/B Testing</h2>
             
             <div class="demo-controls">
                 <!-- Customer Ad Targeting -->
@@ -454,7 +454,7 @@
                     </div>
                     
                     <button class="btn" onclick="predictAdTargeting()" id="predict-btn">
-                        🎯 Predict Ad Performance
+                        TARGET Predict Ad Performance
                     </button>
                     
                     <div id="prediction-result" class="result-panel" style="display: none;"></div>
@@ -462,7 +462,7 @@
 
                 <!-- A/B Test Results -->
                 <div class="demo-panel">
-                    <h3>📊 A/B Test Campaign Results</h3>
+                    <h3>CHART A/B Test Campaign Results</h3>
                     
                     <div class="form-group">
                         <label>Select Campaign</label>
@@ -475,7 +475,7 @@
                     </div>
                     
                     <button class="btn" onclick="loadABTestResults()" id="ab-test-btn">
-                        📈 View A/B Test Results
+                        UP View A/B Test Results
                     </button>
                     
                     <div id="ab-test-result" class="result-panel" style="display: none;"></div>
@@ -628,14 +628,14 @@
 
                 resultDiv.style.display = 'block';
                 resultDiv.innerHTML = `
-                    <h4>🎯 Ad Targeting Results</h4>
+                    <h4>TARGET Ad Targeting Results</h4>
                     <p><strong>Click Probability:</strong> ${(result.click_probability * 100).toFixed(1)}%</p>
                     <p><strong>Conversion Probability:</strong> ${(result.conversion_probability * 100).toFixed(1)}%</p>
                     <p><strong>Recommended Bid:</strong> ¥${result.recommended_bid_yen}</p>
                     <p><strong>Target Score:</strong> ${(result.target_score * 100).toFixed(1)}%</p>
                     <p><strong>Processing Time:</strong> ${result.processing_time_ms}ms</p>
                     <div style="margin-top: 10px; padding: 10px; background: ${result.target_score > 0.5 ? '#e8f5e8' : '#fff3cd'}; border-radius: 5px;">
-                        <strong>${result.target_score > 0.5 ? '✅ High Value Target' : '⚠️ Standard Target'}</strong>
+                        <strong>${result.target_score > 0.5 ? 'PASS High Value Target' : '⚠️ Standard Target'}</strong>
                     </div>
                 `;
 
@@ -644,10 +644,10 @@
 
             } catch (error) {
                 resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `<p style="color: red;">❌ Prediction failed: ${error.message}</p>`;
+                resultDiv.innerHTML = `<p style="color: red;">FAIL Prediction failed: ${error.message}</p>`;
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '🎯 Predict Ad Performance';
+                btn.innerHTML = 'TARGET Predict Ad Performance';
             }
         }
 
@@ -682,7 +682,7 @@
                     ).join('');
 
                     resultDiv.innerHTML = `
-                        <h4>📈 A/B Test Results</h4>
+                        <h4>UP A/B Test Results</h4>
                         <p><strong>Winning Variant:</strong> ${result.analysis.winning_variant.toUpperCase()}</p>
                         <p><strong>Improvement:</strong> +${result.analysis.improvement_percent}%</p>
                         <p><strong>Statistical Significance:</strong> ${result.analysis.statistical_significance ? 'Yes' : 'No'} (${result.analysis.confidence_level}%)</p>
@@ -692,19 +692,19 @@
                             ${variantsHtml}
                         </div>
                         <div style="margin-top: 10px; padding: 10px; background: ${result.analysis.statistical_significance ? '#e8f5e8' : '#fff3cd'}; border-radius: 5px;">
-                            <strong>📋 Recommendation:</strong> ${result.analysis.recommendation}
+                            <strong>SECTION Recommendation:</strong> ${result.analysis.recommendation}
                         </div>
                     `;
                 } else {
-                    resultDiv.innerHTML = `<p style="color: #666;">📊 Test is still collecting data...</p>`;
+                    resultDiv.innerHTML = `<p style="color: #666;">CHART Test is still collecting data...</p>`;
                 }
 
             } catch (error) {
                 resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `<p style="color: red;">❌ Failed to load A/B test results: ${error.message}</p>`;
+                resultDiv.innerHTML = `<p style="color: red;">FAIL Failed to load A/B test results: ${error.message}</p>`;
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '📈 View A/B Test Results';
+                btn.innerHTML = 'UP View A/B Test Results';
             }
         }
 

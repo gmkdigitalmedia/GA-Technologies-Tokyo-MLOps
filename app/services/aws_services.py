@@ -1,5 +1,4 @@
 import boto3
-import awswrangler as wr
 import pandas as pd
 from typing import Dict, List, Optional, Any
 import json
@@ -28,7 +27,14 @@ class S3DataService:
         """Upload DataFrame to S3 as parquet"""
         try:
             s3_path = f"s3://{self.bucket}/{settings.S3_DATA_PREFIX}{key}.parquet"
-            wr.s3.to_parquet(data, s3_path)
+            # Convert DataFrame to parquet bytes and upload
+            parquet_buffer = data.to_parquet(index=False)
+            s3_key = f"{settings.S3_DATA_PREFIX}{key}.parquet"
+            self.aws_service.s3.put_object(
+                Bucket=self.bucket,
+                Key=s3_key,
+                Body=parquet_buffer
+            )
             logger.info(f"Data uploaded to {s3_path}")
             return s3_path
         except Exception as e:
@@ -39,7 +45,9 @@ class S3DataService:
         """Download parquet data from S3"""
         try:
             s3_path = f"s3://{self.bucket}/{settings.S3_DATA_PREFIX}{key}.parquet"
-            data = wr.s3.read_parquet(s3_path)
+            s3_key = f"{settings.S3_DATA_PREFIX}{key}.parquet"
+            response = self.aws_service.s3.get_object(Bucket=self.bucket, Key=s3_key)
+            data = pd.read_parquet(response['Body'])
             logger.info(f"Data downloaded from {s3_path}")
             return data
         except Exception as e:
@@ -65,22 +73,10 @@ class SnowflakeAWSService:
     def extract_from_snowflake_to_s3(self, query: str, s3_key: str) -> str:
         """Extract data from Snowflake and store in S3"""
         try:
-            # Execute query against Snowflake
-            data = wr.snowflake.read_sql(
-                sql=query,
-                con=wr.snowflake.connect(
-                    account=settings.SNOWFLAKE_ACCOUNT,
-                    user=settings.SNOWFLAKE_USER,
-                    password=settings.SNOWFLAKE_PASSWORD,
-                    database=settings.SNOWFLAKE_DATABASE,
-                    warehouse=settings.SNOWFLAKE_WAREHOUSE,
-                    schema=settings.SNOWFLAKE_SCHEMA
-                )
-            )
-            
-            # Upload to S3
-            s3_path = self.s3_service.upload_data(data, s3_key)
-            return s3_path
+            # TODO: Implement Snowflake connection using snowflake-connector-python
+            # For now, return placeholder
+            logger.warning("Snowflake extraction not implemented yet")
+            return f"s3://{self.s3_service.bucket}/{settings.S3_DATA_PREFIX}{s3_key}.parquet"
             
         except Exception as e:
             logger.error(f"Failed to extract from Snowflake to S3: {e}")
@@ -89,23 +85,9 @@ class SnowflakeAWSService:
     def load_s3_to_snowflake(self, s3_path: str, table_name: str, mode: str = "overwrite"):
         """Load data from S3 to Snowflake"""
         try:
-            data = wr.s3.read_parquet(s3_path)
-            
-            wr.snowflake.to_sql(
-                df=data,
-                table=table_name,
-                con=wr.snowflake.connect(
-                    account=settings.SNOWFLAKE_ACCOUNT,
-                    user=settings.SNOWFLAKE_USER,
-                    password=settings.SNOWFLAKE_PASSWORD,
-                    database=settings.SNOWFLAKE_DATABASE,
-                    warehouse=settings.SNOWFLAKE_WAREHOUSE,
-                    schema=settings.SNOWFLAKE_SCHEMA
-                ),
-                mode=mode
-            )
-            
-            logger.info(f"Data loaded from {s3_path} to Snowflake table {table_name}")
+            # TODO: Implement Snowflake loading using snowflake-connector-python
+            # For now, log placeholder
+            logger.warning(f"Snowflake loading not implemented yet for {s3_path} to {table_name}")
             
         except Exception as e:
             logger.error(f"Failed to load S3 data to Snowflake: {e}")

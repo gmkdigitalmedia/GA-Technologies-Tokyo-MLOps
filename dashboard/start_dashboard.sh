@@ -5,7 +5,7 @@
 
 set -e
 
-echo "🚀 GP MLOps MLOps Dashboard"
+echo "LAUNCH GP MLOps MLOps Dashboard"
 echo "================================="
 echo "Backend: http://localhost:2233"
 echo "Frontend: http://localhost:2222"
@@ -14,22 +14,22 @@ echo
 
 # Check Python
 if ! command -v python3 &> /dev/null; then
-    echo "❌ Python 3 not found. Please install Python 3.8+"
+    echo "FAIL Python 3 not found. Please install Python 3.8+"
     exit 1
 fi
 
 # Install dependencies
-echo "📦 Installing dependencies..."
+echo "PKG Installing dependencies..."
 pip3 install -r requirements.txt --quiet
 
-echo "✅ Dependencies installed"
+echo "PASS Dependencies installed"
 echo
 
 # Create log directory
 mkdir -p logs
 
 # Start backend in background
-echo "🔧 Starting backend server on port 2233..."
+echo "FIX Starting backend server on port 2233..."
 python3 backend.py > logs/backend.log 2>&1 &
 BACKEND_PID=$!
 
@@ -39,9 +39,9 @@ sleep 5
 
 # Check if backend is running
 if ps -p $BACKEND_PID > /dev/null; then
-    echo "✅ Backend server started successfully"
+    echo "PASS Backend server started successfully"
 else
-    echo "❌ Backend server failed to start"
+    echo "FAIL Backend server failed to start"
     exit 1
 fi
 
@@ -64,7 +64,7 @@ cleanup() {
         kill $(cat backend.pid) 2>/dev/null || true
         rm -f backend.pid
     fi
-    echo "✅ Shutdown complete"
+    echo "PASS Shutdown complete"
 }
 
 trap cleanup EXIT
