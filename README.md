@@ -1,6 +1,9 @@
-# GP MLOps MLOps Platform
-
-A comprehensive MLOps/LLMOps platform for GP MLOps' real estate business, featuring customer value inference, floorplan layout detection, and conversion optimization.
+# GA Technologies Tokyo MLOps Demo
+A comprehensive MLOps/LLMOps platform for GA Technololgies MLOps' real estate business, featuring customer value inference, floorplan layout detection, and conversion optimization.
+They basically spend approximately 30 Million yen on advertising a month, and they were hoping to hire someone to bring it down and maintain version control.  I created an MLOp's platform for them, but 
+Did not give them any "help" on how to lower the advertising cost during the interview process.  Basically, that would be something they would need to hire me for...its not really appropriate for a 
+developer interview.  This setups is not my IDEAL setup, but rather their current existing setup.  I generally build a company their infrastructure quickly and then discuss their goals, but I do not offer 
+anything useful or constructive unless hired, since "savy" business people will try to take your suggestions and have their in house team try to implement it.  
 
 ## Architecture Overview
 
@@ -264,4 +267,5 @@ For support and questions:
            │              │   Snowflake DW   │    │   AWS Services  │
            └──────────────┤   Data Storage   │    │   S3, ECS, etc  │
                           └──────────────────┘    └─────────────────┘
+
 Built with ❤️ for GP MLOps' real estate platform.
